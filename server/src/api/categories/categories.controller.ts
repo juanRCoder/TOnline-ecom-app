@@ -16,7 +16,7 @@ export const getAllCategories = async (
     if (!categoryList.length) {
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json(apiResponse(false, { message: "There are no products" }));
+        .json(apiResponse(false, { message: "There are no categories" }));
     }
     return res.status(HttpStatus.OK).json(apiResponse(true, categoryList));
   } catch (error) {

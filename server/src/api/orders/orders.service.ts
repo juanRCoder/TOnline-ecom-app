@@ -1,5 +1,6 @@
 import { PrismaClient } from "@generated/prisma/client";
 import { orderedProduct, orderListDto } from "./orders.dto";
+import { formatVoucherDate } from "@server/utils/date.utils";
 const prisma = new PrismaClient();
 
 const findAllOrders = async () => {
@@ -74,7 +75,7 @@ const createOrder = async (
   const deliveryCost = voucher?.typeOfDelivery === "delivery" ? 3 : 0; // add 3 soles
   return {
     id: voucher?.id,
-    createdAt: voucher?.createdAt,
+    createdAt: formatVoucherDate(voucher?.createdAt.toISOString() || ""),
     products: voucherProducts,
     subtotal: totalProducts,
     deliveryCost,

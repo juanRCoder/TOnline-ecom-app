@@ -15,7 +15,7 @@ export const getAllOrders = async (
     if (!orderList.length) {
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json(apiResponse(false, { message: "There are no products" }));
+        .json(apiResponse(false, { message: "There are no orders" }));
     }
     return res.status(HttpStatus.OK).json(apiResponse(true, orderList));
   } catch (error) {
