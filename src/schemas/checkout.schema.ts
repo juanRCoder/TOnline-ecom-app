@@ -1,3 +1,4 @@
+import type { CartItemList } from "@/types/cart.types";
 import { z } from "zod";
 
 export const schemaCheckoutForm = z
@@ -22,4 +23,7 @@ export const schemaCheckoutForm = z
     }
   );
 
-export type typeCheckoutForm = z.infer<typeof schemaCheckoutForm>;
+export type TypeCheckoutForm = z.infer<typeof schemaCheckoutForm>;
+export type TypeCheckout = TypeCheckoutForm & {
+  products: Omit<CartItemList, "name" | "imageUrl">[]
+}

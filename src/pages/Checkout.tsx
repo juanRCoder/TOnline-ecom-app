@@ -1,14 +1,20 @@
-import { FormInput } from "@/components/FormInput";
-import { FormInputRadio } from "@/components/FormInputRadio";
-import { schemaCheckoutForm, type typeCheckoutForm } from "@/schemas/checkout.schema";
-import { defaultCheckoutForm } from "@/utils/default";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormInput } from "@/components/FormInput";
+import { FormInputRadio } from "@/components/FormInputRadio";
+import { useCreateOrder } from "@/hooks/useOrders";
+import { schemaCheckoutForm, type TypeCheckoutForm } from "@/schemas/checkout.schema";
+import { useCartStore } from "@/stores/cart.store";
+import { useVoucherStore } from "@/stores/voucher.store";
+import { defaultCheckoutForm } from "@/utils/default";
+
 
 const Checkout = () => {
   const navigate = useNavigate()
+  const { items, clearCart } = useCartStore()
+  const { setVoucher } = useVoucherStore()
 
   const {
     register,
@@ -17,7 +23,7 @@ const Checkout = () => {
     watch,
     clearErrors,
     formState: { errors }
-  } = useForm<typeCheckoutForm>({
+  } = useForm<TypeCheckoutForm>({
     resolver: zodResolver(schemaCheckoutForm),
     defaultValues: defaultCheckoutForm
   })
@@ -25,16 +31,37 @@ const Checkout = () => {
   const typeOfDeliveryValue = watch("typeOfDelivery");
   const typeOfPaymentValue = watch("typeOfPayment")
 
-  const onSubmit = (data: typeCheckoutForm) => {
+  const { mutate: createOrder } = useCreateOrder({
+    onSuccess(data) {
+      console.log("Order created successfully:", data);
+      clearCart()
+      setVoucher(data.payload)
+      navigate('/voucher')
+    },
+    onError(error) {
+      console.error(error);
+    }
+  })
+
+  const onSubmit = (data: TypeCheckoutForm) => {
     if (data.typeOfDelivery === 'local') {
       delete data.guestUserAddress
     }
-    console.log({
+
+    const newOrder = {
       ...data,
-      ...(data.typeOfPayment === 'bank' && { imageVoucher: null })
-    })
-    // navigate('/voucher')
+      ...(data.typeOfPayment === 'bank' && { imageVoucher: null }),
+      products: items.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        price: item.price
+      }))
+    }
+    createOrder(newOrder)
   }
+
+  const totalProductInCart = items.reduce((acc, p) => (acc + p.price) * p.quantity, 0);
+  const addAmountForDelivery = typeOfDeliveryValue === 'delivery' ? 3 : 0;
 
   return (
     <section className="relative max-w-7xl mx-auto outline-1 bg-white text-gray-800 min-h-screen flex flex-col">
@@ -47,14 +74,14 @@ const Checkout = () => {
         <section className="flex flex-col gap-3 px-3 pt-3">
           <FormInput
             id="guestUserName"
-            label="Nombre"
+            label="Nombre de cliente"
             placeholder="Ingresa tu nombre"
             {...register("guestUserName")}
             error={errors.guestUserName?.message}
           />
           <FormInput
             id="guestUserPhone"
-            label="Número de teléfono"
+            label="Número de teléfono de cliente"
             placeholder="Ingresa tu número"
             {...register("guestUserPhone")}
             error={errors.guestUserPhone?.message}
@@ -91,7 +118,7 @@ const Checkout = () => {
           <section className="flex flex-col gap-3 px-3 pt-3">
             <FormInput
               id="guestUserAddress"
-              label="Direccion domiciliaria"
+              label="Direccion domiciliaria del cliente"
               placeholder="Ingresa tu direccion domiciliaria"
               {...register("guestUserAddress")}
               error={errors.guestUserAddress?.message}
@@ -125,33 +152,36 @@ const Checkout = () => {
           </div>
         </section>
         {typeOfPaymentValue === "bank" && (
-          <section className="flex flex-col gap-3 px-3 pt-3 text-gray-400">
-            agregar voucher de pago como prueba
+          <section className="flex flex-col gap-3 p-3 text-gray-400 outline-1 outline-gray-200 mx-4 mt-3 rounded-lg">
+            proximamente agregado de voucher de pago
           </section>
         )}
         <section className="flex flex-col gap-3 px-3 pt-3">
-          <FormInput
+          <label htmlFor="notes" className="text-gray-500 text-sm">Notas para la tienda</label>
+          <textarea
+            className="outline-none rounded-md p-2 min-h-20 resize-none bg-gray-100"
             id="notes"
-            label="Notas para la tienda"
-            placeholder="Ingesa datos extras como cantidad exacta con la que pagara, etc."
+            placeholder="Escribe alguna nota para la tienda, sencillo de dinero, cambio, etc."
             {...register("notes")}
-            error={errors.notes?.message}
           />
+          {errors.notes && <p className="text-sm text-red-400">{errors.notes.message}</p>}
         </section>
         {/* RESUMEN */}
         <div className="outline-1 outline-gray-200 m-3 mt-10 rounded-lg">
           <h3 className="font-semibold p-3">Resumen</h3>
           <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
             <p>Total productos</p>
-            <p>s/ 15.00</p>
+            <p>S/ {totalProductInCart.toFixed(2)}</p>
           </div>
-          <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
-            <p>Delivery</p>
-            <p>s/ 2.00</p>
-          </div>
+          {typeOfDeliveryValue === 'delivery' && (
+            <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
+              <p>Delivery</p>
+              <p>S/ 3.00</p>
+            </div>
+          )}
           <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm font-semibold">
             <p className="">Total</p>
-            <p className="text-orange-500">s/ 2.00</p>
+            <p className="text-orange-500">S/ {(totalProductInCart + addAmountForDelivery).toFixed(2)}</p>
           </div>
         </div>
         <div className="px-3">
