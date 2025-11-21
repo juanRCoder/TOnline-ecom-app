@@ -17,14 +17,16 @@ const Products = () => {
   const navigate = useNavigate()
   const { items } = useCartStore()
   const debouncedSearch = useDebounce(searchTerm, 400);
-  const { data: allProducts } = useProducts.AllProducts(debouncedSearch)
-  const { data: productsByCategory } = useProducts.ProductsByCategory(categoryId)
-  const { data: allCategories } = useCategories.AllCategories()
+  const { data: allProducts, isLoading: loadingAll, error: errorAll } = useProducts.AllProducts(debouncedSearch)
+  const { data: productsByCategory, isLoading: loadingCategory, error: errorCategory } = useProducts.ProductsByCategory(categoryId)
+  const { data: allCategories, error: errorCategories } = useCategories.AllCategories()
 
-  const categoriesWithAll = useMemo(() => { // memoriza el array de categorias
-    const base = allCategories || [];
-    return [{ id: '', name: 'Todos' }, ...base];
-  }, [allCategories]);
+  const categoriesWithAll = useMemo(() => {
+    if (errorCategories) return allCategories?.payload || [];
+
+    const base = allCategories?.payload || [];
+    return [{ id: "", name: "Todos" }, ...base];
+  }, [allCategories, errorCategories]);
 
 
   const handleProductsByCategory = (ctg: categoryList) => {
@@ -41,7 +43,9 @@ const Products = () => {
     }
   }
 
-  const filteredProducts = onCategory === 'Todos' ? allProducts : productsByCategory
+  const filteredProducts = onCategory === 'Todos' ? allProducts?.payload : productsByCategory?.payload
+  const loading = loadingAll || loadingCategory;
+  const error = errorAll || errorCategory;
 
   return (
     <section className="relative max-w-7xl mx-auto outline-1 bg-white text-gray-800 min-h-screen flex flex-col">
@@ -74,6 +78,11 @@ const Products = () => {
         </div>
       </div>
       <div className="flex gap-3 pb-4 px-3 overflow-x-auto">
+        {errorCategories && (
+          <div className="flex-1 flex items-center gap-4">
+            <span className="text-red-500">{errorCategories.message}</span>
+          </div>
+        )}
         {categoriesWithAll?.map((ctg: categoryList) => (
           <span
             key={ctg.id}
@@ -86,17 +95,29 @@ const Products = () => {
           </span>
         ))}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 bg-gray-50 py-4">
-        {filteredProducts && filteredProducts.length > 0 ? (
-          filteredProducts.map((prd: productList) => (
-            <CardProduct key={prd.id} product={prd} />
-          ))
-        ) : (
-          <div className="col-span-full text-center text-gray-500 py-10 select-none">
-            No se encontraron productos
-          </div>
-        )}
-      </div>
+      {loading && (
+        <div className="flex-1 flex items-center justify-center flex-col gap-4">
+          <span className="block border-5 border-orange-500 border-l-transparent w-12 h-12 rounded-full animate-spin" />
+        </div>
+      )}
+      {error && (
+        <div className="flex-1 flex items-center justify-center gap-4">
+          <span className="text-red-500">{error.message}</span>
+        </div>
+      )}
+      {!loading && !error && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 bg-gray-50 py-4">
+          {filteredProducts && filteredProducts.length > 0 ? (
+            filteredProducts.map((prd: productList) => (
+              <CardProduct key={prd.id} product={prd} />
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-500 py-10 select-none">
+              No se encontraron productos
+            </div>
+          )}
+        </div>
+      )}
     </section>
   )
 }

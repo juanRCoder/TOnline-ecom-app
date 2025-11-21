@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 
 type UseCreateOrderProps = {
   onSuccess?: (data: { success: boolean; payload: VoucherType }) => void;
-  onError?: (error: unknown) => void;
+  onError?: (message: string) => void;
 };
 
 export const useCreateOrder = ({ onSuccess, onError }: UseCreateOrderProps) => {
@@ -15,7 +15,7 @@ export const useCreateOrder = ({ onSuccess, onError }: UseCreateOrderProps) => {
       if (onSuccess) onSuccess(data);
     },
     onError(error) {
-      if (onError) onError(error);
+      if (onError) onError(error instanceof Error ? error.message : String(error));
     },
   });
 };

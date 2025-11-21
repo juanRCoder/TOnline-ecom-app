@@ -10,8 +10,8 @@ export const getAllCategories = async () => {
     });
 
     const result = await response.json();
-    if (!response.ok) throw new Error(result.message);
-    return result.payload;
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
   } catch (error) {
     console.error("[getAllCategories]", error);
     throw error;

@@ -31,15 +31,14 @@ const Checkout = () => {
   const typeOfDeliveryValue = watch("typeOfDelivery");
   const typeOfPaymentValue = watch("typeOfPayment")
 
-  const { mutate: createOrder } = useCreateOrder({
+  const { mutate: createOrder, isPending: isCreatingOrder } = useCreateOrder({
     onSuccess(data) {
-      console.log("Order created successfully:", data);
       clearCart()
       setVoucher(data.payload)
       navigate('/voucher')
     },
     onError(error) {
-      console.error(error);
+      console.log(error)
     }
   })
 
@@ -186,7 +185,7 @@ const Checkout = () => {
         </div>
         <div className="px-3">
           <button type="submit" className="cursor-pointer bg-[#EC6D13] text-white py-3 rounded-md text-sm w-full px-3 mb-6">
-            Finalizar compra
+            {isCreatingOrder ? 'Procesando compra...' : 'Finalizar compra'}
           </button>
         </div>
       </form>

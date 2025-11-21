@@ -10,17 +10,19 @@ export const getAllProducts = async (
   next: NextFunction
 ) => {
   const { searchTerm } = req.query;
-  const term = typeof searchTerm === 'string' ? searchTerm : undefined;
+  const term = typeof searchTerm === "string" ? searchTerm : undefined;
 
   try {
-    const productList: productListDto[] =
-      await ProductServices.findAllProducts(term);
+    const productList: productListDto[] = await ProductServices.findAllProducts(
+      term
+    );
 
     if (!productList.length) {
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json(apiResponse(false, { message: "There are no products" }));
+        .json(apiResponse(false, { message: "No se encontraron productos" }));
     }
+
     return res.status(HttpStatus.OK).json(apiResponse(true, productList));
   } catch (error) {
     console.error("[Controller: getAllProducts]", error);
@@ -39,13 +41,11 @@ export const getProductsByCategoryId = async (
       await ProductServices.findProductsByCategoryId(id);
 
     if (!productList.length) {
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json(
-          apiResponse(false, {
-            message: "There are no products for this category",
-          })
-        );
+      return res.status(HttpStatus.NOT_FOUND).json(
+        apiResponse(false, {
+          message: "No se encontraron productos para esta categoría",
+        })
+      );
     }
 
     return res.status(HttpStatus.OK).json(apiResponse(true, productList));

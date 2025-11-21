@@ -34,7 +34,11 @@ export const createOrder = async (
   if (!products || products.length === 0) {
     return res
       .status(HttpStatus.BAD_REQUEST)
-      .json(apiResponse(false, { message: "Products list is required" }));
+      .json(
+        apiResponse(false, {
+          message: "No se proporcionaron productos para el pedido",
+        })
+      );
   }
 
   try {

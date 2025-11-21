@@ -13,7 +13,7 @@ export const createOrder = async (orderData: TypeCheckout) => {
     });
 
     const result = await response.json();
-    if (!response.ok) throw new Error(result.message);
+    if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
     console.error("[createOrder]", error);
