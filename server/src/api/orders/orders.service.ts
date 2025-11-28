@@ -1,6 +1,11 @@
+import dotenv from "dotenv";
 import { prisma } from "@server/prisma";
+import { UploadApiResponse } from "cloudinary";
 import { orderedProduct, orderListDto } from "./orders.dto";
 import { formatVoucherDate } from "@server/utils/date.utils";
+import { uploadImageToCloudinary } from "@server/services/cloudinary";
+
+dotenv.config();
 
 const findAllOrders = async () => {
   const allCategories = await prisma.orders.findMany({
@@ -22,8 +27,11 @@ const findAllOrders = async () => {
 
 const createOrder = async (
   orderData: orderListDto,
-  products: orderedProduct[]
+  products: orderedProduct[],
+  buffer?: Buffer
 ) => {
+  const folder = `${process.env.ROOT_FOLDER}/voucher-images`;
+
   const selectProducts = products.map((p) => p.id);
   const dbProducts = await prisma.products.findMany({
     where: { id: { in: selectProducts } },
@@ -41,20 +49,27 @@ const createOrder = async (
     };
   });
 
+  let imgResult: UploadApiResponse | null = null;
+  if (buffer && orderData.typeOfPayment === "bank") {
+    imgResult = await uploadImageToCloudinary(buffer, folder);
+  }
+
   const totalProducts = orderProducts.reduce(
     (acc, op) => acc + (op.subtotal ?? 0),
     0
   );
-  const newOrder = await prisma.orders.create({
-    data: {
-      ...orderData,
-      total: totalProducts,
-      orderProducts: {
-        createMany: {
-          data: orderProducts,
-        },
-      },
+
+  const orderPayload = {
+    ...orderData,
+    total: totalProducts,
+    orderProducts: {
+      createMany: { data: orderProducts },
     },
+  };
+  if (imgResult) orderPayload.imageVoucher = imgResult.secure_url;
+
+  const newOrder = await prisma.orders.create({
+    data: orderPayload,
   });
 
   const voucher = await prisma.orders.findUnique({

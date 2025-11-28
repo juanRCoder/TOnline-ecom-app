@@ -30,19 +30,25 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   const { products, ...orderData } = req.body;
+  const imageVoucher = req.file?.buffer;
 
-  if (!products || products.length === 0) {
-    return res
-      .status(HttpStatus.BAD_REQUEST)
-      .json(
-        apiResponse(false, {
-          message: "No se proporcionaron productos para el pedido",
-        })
-      );
+  if (!products) {
+    return res.status(HttpStatus.BAD_REQUEST).json(
+      apiResponse(false, {
+        message: "No se proporcionaron productos para el pedido",
+      })
+    );
   }
 
+  const parsedProducts =
+    typeof products === "string" ? JSON.parse(products) : products;
+
   try {
-    const newOrder = await OrderServices.createOrder(orderData, products);
+    const newOrder = await OrderServices.createOrder(
+      orderData,
+      parsedProducts,
+      imageVoucher
+    );
     return res.status(HttpStatus.OK).json(apiResponse(true, newOrder));
   } catch (error) {
     console.error("[Controller: createOrder]", error);

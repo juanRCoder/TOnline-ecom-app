@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 
 cloudinary.config();
 
@@ -6,9 +6,9 @@ export const uploadImageToCloudinary = async (
   buffer: Buffer,
   folder: string,
   public_id?: string
-) => {
+): Promise<UploadApiResponse> => {
   return new Promise((res, rej) => {
-    const finalPublicId = public_id || `${folder}/${Date.now()}`;
+    const finalPublicId = public_id || `voucher-${Date.now()}`;
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder,
