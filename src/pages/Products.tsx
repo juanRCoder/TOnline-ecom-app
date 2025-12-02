@@ -79,7 +79,7 @@ const Products = () => {
           />
         </div>
       </div>
-      <div className="flex gap-3 pb-4 px-3 overflow-x-auto">
+      <div className="scrollbar-custom flex gap-3 pb-4 px-3 overflow-x-auto">
         {errorCategories && (
           <div className="flex-1 flex items-center gap-4">
             <span className="text-red-500">{errorCategories.message}</span>

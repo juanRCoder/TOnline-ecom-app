@@ -35,7 +35,13 @@ const Cart = () => {
           <p>S/ {totalProductInCart.toFixed(2)}</p>
         </div>
         <div className="px-3">
-          <button onClick={() => navigate('/checkout')} className="cursor-pointer bg-[#EC6D13] text-white mb-4 py-3 px-3 rounded-md text-sm w-full">
+          <button
+            onClick={() => navigate('/checkout')}
+            disabled={items.length === 0}
+            className={`text-white mb-4 py-3 px-3 rounded-md text-sm w-full
+              ${items.length > 0 ? 'bg-[#EC6D13] cursor-pointer' : 'bg-[#EC6D13]/60 select-none'}
+            `}
+          >
             Pagar
           </button>
         </div>

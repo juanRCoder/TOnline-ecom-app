@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import { defaultCheckoutForm } from "@/utils/default";
 
 
 const Checkout = () => {
+  const [hasItems, setHasItem] = useState<boolean>(false)
   const navigate = useNavigate()
   const { items, clearCart } = useCartStore()
   const { setVoucher } = useVoucherStore()
@@ -44,6 +46,10 @@ const Checkout = () => {
   })
 
   const onSubmit = (data: TypeCheckoutForm) => {
+    if (items.length < 1) {
+      setHasItem(true)
+      return
+    }
     if (data.typeOfDelivery === 'local') {
       delete data.guestUserAddress
     }
@@ -216,12 +222,15 @@ const Checkout = () => {
                 Subir imagen
               </label>
             )}
+            {typeof errors.imageVoucher?.message === "string" && (
+              <p className="text-sm text-red-400">{errors.imageVoucher.message}</p>
+            )}
           </section>
         )}
         <section className="flex flex-col gap-3 px-3 pt-3">
           <label htmlFor="notes" className="text-gray-500 text-sm">Notas para la tienda</label>
           <textarea
-            className="outline-none rounded-md p-2 min-h-20 resize-none bg-gray-100"
+            className="scrollbar-custom outline-none rounded-md p-2 min-h-20 resize-none bg-gray-100"
             id="notes"
             placeholder="Escribe alguna nota para la tienda, sencillo de dinero, cambio, etc."
             {...register("notes")}
@@ -233,7 +242,9 @@ const Checkout = () => {
           <h3 className="font-semibold p-3">Resumen</h3>
           <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
             <p>Total productos</p>
-            <p>S/ {totalProductInCart.toFixed(2)}</p>
+            <p className={`${items.length < 1 && 'text-red-500'}`}>
+              {items.length > 0 ? `S/ ${totalProductInCart.toFixed(2)}` : 'Sin Productos'}
+            </p>
           </div>
           {typeOfDeliveryValue === 'delivery' && (
             <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
@@ -246,8 +257,17 @@ const Checkout = () => {
             <p className="text-orange-500">S/ {(totalProductInCart + addAmountForDelivery).toFixed(2)}</p>
           </div>
         </div>
+        {hasItems && (
+          <p className="text-red-500 mx-3 mt-4">No hay productos en el carrito</p>
+        )}
         <div className="px-3 py-5">
-          <button type="submit" className="cursor-pointer bg-[#EC6D13] text-white py-3 rounded-md w-full p-3">
+          <button
+            type="submit"
+            disabled={items.length === 0}
+            className={`text-white py-3 rounded-md w-full p-3
+              ${items.length > 0 ? 'bg-[#EC6D13] cursor-pointer' : 'bg-[#EC6D13]/60 select-none'}
+            `}
+          >
             {isCreatingOrder ? 'Procesando compra...' : 'Finalizar compra'}
           </button>
         </div>

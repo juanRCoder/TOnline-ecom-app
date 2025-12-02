@@ -4,5 +4,6 @@ export const defaultCheckoutForm = {
   typeOfDelivery: "",
   guestUserAddress: "",
   typeOfPayment: "",
+  imageVoucher: null,
   notes: ""
 };
