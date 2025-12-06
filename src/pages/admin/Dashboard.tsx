@@ -9,19 +9,19 @@ const Dashboard = () => {
     {
       icon: BoxIcon,
       title: "Productos",
-      link: "/admin/products",
+      link: "products",
       description: "Gestionar productos y stock",
     },
     {
       icon: LayoutGrid,
       title: "Categorias",
-      link: "products",
+      link: "categories",
       description: "Organizar categorias",
     },
     {
       icon: NotepadText,
       title: "Ordenes",
-      link: "products",
+      link: "orders",
       description: "Ver y administrar ordenes",
     },
   ];
@@ -45,7 +45,7 @@ const Dashboard = () => {
         </div>
         <section className="flex flex-col gap-5 my-10">
           {adminActions.map(action => (
-            <Link key={action.title} to={action.link} className="flex items-center justify-between gap-4 py-4 px-3 cursor-pointer rounded-md bg-white shadow-sm">
+            <Link key={action.title} to={`/admin/${action.link}`} className="flex items-center justify-between gap-4 py-4 px-3 cursor-pointer rounded-md bg-white shadow-sm">
               <div className="flex items-center gap-4">
                 <action.icon size={40} />
                 <div>
