@@ -11,7 +11,9 @@ import { schemaCheckoutForm, type TypeCheckoutForm, type TypeCheckout } from "@/
 import { useCartStore } from "@/stores/cart.store";
 import { useVoucherStore } from "@/stores/voucher.store";
 import { defaultCheckoutForm } from "@/lib/default";
-
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Checkout = () => {
   const [hasItems, setHasItem] = useState<boolean>(false)
@@ -135,7 +137,7 @@ const Checkout = () => {
                 clearErrors("typeOfDelivery");
               }}
             />
-            {errors.typeOfDelivery && <p className="text-sm text-red-400">{errors.typeOfDelivery.message}</p>}
+            {errors.typeOfDelivery && <p className="text-sm text-destructive">{errors.typeOfDelivery.message}</p>}
           </div>
         </section>
         {typeOfDeliveryValue === "delivery" && (
@@ -172,12 +174,12 @@ const Checkout = () => {
                 clearErrors("typeOfPayment");
               }}
             />
-            {errors.typeOfPayment && <p className="text-sm text-red-400">{errors.typeOfPayment.message}</p>}
+            {errors.typeOfPayment && <p className="text-sm text-destructive">{errors.typeOfPayment.message}</p>}
           </div>
         </section>
         {typeOfPaymentValue === "bank" && (
           <section className="p-3">
-            <div className="my-4 outline-1 outline-gray-200 rounded-md p-3">
+            <div className="my-4 outline-1 outline-secondary rounded-md p-3">
               {/* METODOS DE PAGO */}
               <div className="flex flex-wrap-reverse justify-between items-center gap-2">
                 <div className="flex flex-col justify-center">
@@ -186,7 +188,7 @@ const Checkout = () => {
                 </div>
                 <img
                   src="/logo_interbank.png"
-                  className="h-12 block"
+                  className="h-12 block rounded-md"
                 />
               </div>
               {/* TITULAR */}
@@ -196,80 +198,78 @@ const Checkout = () => {
               </div>
             </div>
             <h3 className="font-semibold my-4">Comprobante de pago</h3>
-            <input
+            <Input
               id="imageVoucher"
               {...register("imageVoucher")}
               type="file"
               accept="image/*"
               placeholder="subir imagen"
-              className="text-sm text-gray-300 hidden"
+              className="hidden"
             />
             {watch("imageVoucher")?.[0] ? (
               <div className="flex justify-between items-center p-3">
-                <p className="text-sm text-gray-600 mt-2">
-                  {watch("imageVoucher")[0].name}
-                </p>
-                <button
+                <p>{watch("imageVoucher")[0].name}</p>
+                <Button
                   type="button"
-                  className="bg-[#EC6D13] text-white text-sm font-semibold py-2 px-3 rounded-md cursor-pointer"
+                  className="font-semibold cursor-pointer"
                   onClick={() => setValue("imageVoucher", null)}
                 >
                   Quitar
-                </button>
+                </Button>
               </div>
             ) : (
-              <label htmlFor="imageVoucher" className="block py-2 rounded-md cursor-pointer text-center text-[#EC6D13] bg-[#FEE7D6]">
+              <Label htmlFor="imageVoucher" className="block py-3 rounded-md cursor-pointer text-center bg-primary-foreground outline-1 outline-secondary">
                 Subir imagen
-              </label>
+              </Label>
             )}
             {typeof errors.imageVoucher?.message === "string" && (
-              <p className="text-sm text-red-400">{errors.imageVoucher.message}</p>
+              <p className="text-sm text-destructive">{errors.imageVoucher.message}</p>
             )}
           </section>
         )}
         <section className="flex flex-col gap-3 px-3 pt-3">
-          <label htmlFor="notes" className="text-gray-500 text-sm">Notas para la tienda</label>
+          <Label htmlFor="notes">Notas para la tienda</Label>
           <textarea
-            className="scrollbar-custom outline-none rounded-md p-2 min-h-20 resize-none bg-gray-100"
+            className="scrollbar-custom outline-none rounded-md p-2 min-h-20 resize-none bg-input"
             id="notes"
             placeholder="Escribe alguna nota para la tienda, sencillo de dinero, cambio, etc."
             {...register("notes")}
           />
-          {errors.notes && <p className="text-sm text-red-400">{errors.notes.message}</p>}
+          {errors.notes && <p className="text-sm text-destructive">{errors.notes.message}</p>}
         </section>
         {/* RESUMEN */}
-        <div className="outline-1 outline-gray-200 mx-3 mt-10 rounded-lg">
+        <div className="outline-1 outline-secondary mx-3 mt-10 rounded-md">
           <h3 className="font-semibold p-3">Resumen</h3>
-          <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
+          <div className="flex justify-between border-t-2 border-t-secondary py-2 mx-3 text-sm">
             <p>Total productos</p>
-            <p className={`${items.length < 1 && 'text-red-500'}`}>
+            <p className={`${items.length < 1 && 'text-destructive'}`}>
               {items.length > 0 ? `S/ ${totalProductInCart.toFixed(2)}` : 'Sin Productos'}
             </p>
           </div>
           {typeOfDeliveryValue === 'delivery' && (
-            <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm">
+            <div className="flex justify-between border-t-2 border-t-secondary py-2 mx-3 text-sm">
               <p>Delivery</p>
               <p>S/ 3.00</p>
             </div>
           )}
-          <div className="flex justify-between border-t-2 border-t-[#F3F4F6] py-2 mx-3 text-sm font-semibold">
+          <div className="flex justify-between border-t-2 border-t-secondary py-2 mx-3 text-sm font-semibold">
             <p className="">Total</p>
-            <p className="text-orange-500">S/ {(totalProductInCart + addAmountForDelivery).toFixed(2)}</p>
+            <p className="text-primary font-bold">S/ {(totalProductInCart + addAmountForDelivery).toFixed(2)}</p>
           </div>
         </div>
         {hasItems && (
-          <p className="text-red-500 mx-3 mt-4">No hay productos en el carrito</p>
+          <p className="text-destructive mx-3 mt-4">No hay productos en el carrito</p>
         )}
-        <div className="px-3 py-5">
-          <button
+        <div className="px-3 my-4">
+          <Button
             type="submit"
             disabled={items.length === 0}
-            className={`text-white py-3 rounded-md w-full p-3
-              ${items.length > 0 ? 'bg-[#EC6D13] cursor-pointer' : 'bg-[#EC6D13]/60 select-none'}
+            className={`w-full py-5
+              ${items.length > 0 ? 'bg-primary cursor-pointer' : 'bg-primary/60 select-none'}
             `}
           >
             {isCreatingOrder ? 'Procesando compra...' : 'Finalizar compra'}
-          </button>
+          </Button>
         </div>
       </form>
     </ShopLayout>

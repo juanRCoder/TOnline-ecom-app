@@ -1,4 +1,6 @@
 import React from "react";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 type FormInputProps = {
   id: string;
@@ -12,16 +14,15 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
   ({ id, label, type = "text", placeholder, error, ...rest }, ref) => {
     return (
       <div className='gap-1 rounded-xl flex flex-col'>
-        {label && (<label htmlFor={id} className="text-gray-500 text-sm">{label}</label>)}
-        <input
+        {label && (<Label htmlFor={id}>{label}</Label>)}
+        <Input
           id={id}
           type={type}
           placeholder={placeholder}
           ref={ref}
-          className='w-full outline-none border-none bg-gray-100 p-2 rounded-lg'
           {...rest} // pasa value, onChange, onBlur, etc.
         />
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-destructive">{error}</p>}
       </div>
     )
   }

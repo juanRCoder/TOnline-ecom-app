@@ -19,13 +19,10 @@ export const CartItem = ({ item }: CartItemProps) => {
 
   return (
     <div className="flex gap-3 items-stretch select-none">
-      <div className="flex justify-center items-center rounded-md">
+      <div className="flex justify-center items-center rounded-md outline-1 outline-secondary">
         <img
           src={item.imageUrl || IMG_DEFAULT}
-          className={`
-            object-contain max-h-24 h-24 w-36 rounded-md outline-1
-            ${!item.imageUrl && 'opacity-50'}
-          `}
+          className="rounded-md object-contain opacity-90 max-h-24 h-24 w-36"
         />
       </div>
       <div className="flex flex-col justify-between flex-1">

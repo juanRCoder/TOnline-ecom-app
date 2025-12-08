@@ -1,4 +1,6 @@
 import React from 'react'
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
 type FormInputRadioProps = {
   name: string;
@@ -9,16 +11,16 @@ type FormInputRadioProps = {
 export const FormInputRadio = React.forwardRef<HTMLInputElement, FormInputRadioProps>(
   ({ name, value, label, ...rest }, ref) => {
     return (
-      <label className="flex items-center gap-2 cursor-pointer outline outline-gray-200 p-3 rounded-lg
-          has-[input:checked]:outline-[#EC6D13] has-[input:checked]:outline-2">
-        <input type="radio" name={name} value={value} ref={ref} className="hidden peer" {...rest} />
-        <span className="w-4 h-4 outline-1 outline-gray-300 rounded-full grid place-items-center
-            peer-checked:bg-[#EC6D13] peer-checked:[&>span]:bg-white peer-checked:outline-none
+      <Label className="flex items-center gap-2 outline-1 outline-secondary cursor-pointer p-3 rounded-md
+          has-[input:checked]:outline-primary has-[input:checked]:outline-2">
+        <Input type="radio" name={name} value={value} ref={ref} className="hidden peer" {...rest} />
+        <span className="w-4 h-4 outline-1 rounded-full grid place-items-center
+            peer-checked:bg-primary peer-checked:[&>span]:bg-secondary peer-checked:outline-none
           ">
-          <span className="w-2 h-2 rounded-full" />
+          <span className="mt-px w-2 h-2 rounded-full" />
         </span>
-        <span className="text-sm text-gray-700">{label}</span>
-      </label>
+        <span className="text-sm">{label}</span>
+      </Label>
     )
   }
 )

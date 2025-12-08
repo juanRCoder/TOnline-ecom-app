@@ -33,11 +33,11 @@ const Cart = () => {
           <p>Total:</p>
           <p>S/ {totalProductInCart.toFixed(2)}</p>
         </div>
-        <div className="px-3">
+        <div className="px-3 my-4">
           <Button
             onClick={() => navigate('/checkout')}
             disabled={items.length === 0}
-            className={`w-full py-5 mb-4
+            className={`w-full py-5
               ${items.length > 0 ? 'cursor-pointer' : 'bg-primary/50 select-none' }
             `}
           >
