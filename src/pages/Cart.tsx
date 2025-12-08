@@ -43,15 +43,6 @@ const Cart = () => {
           >
             Pagar
           </Button>
-          {/* <button
-            onClick={() => navigate('/checkout')}
-            disabled={items.length === 0}
-            className={`mb-4 py-3 px-3 rounded-md text-sm w-full
-              ${items.length > 0 ? 'bg-[#EC6D13] cursor-pointer' : 'bg-[#EC6D13]/60 select-none'}
-            `}
-          >
-            Pagar
-          </button> */}
         </div>
       </div>
     </ShopLayout>
