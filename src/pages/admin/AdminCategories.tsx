@@ -9,12 +9,12 @@ const AdminCategories = () => {
   return (
     <AdminLayout>
       {/* HEADER */}
-      <div className='flex items-center justify-between p-4 shadow-sm z-10'>
+      <div className='bg-background text-foreground flex p-4 border-b'>
         <ArrowLeft onClick={() => navigate('/admin/dashboard')} strokeWidth={3} className='cursor-pointer' />
         <h2 className="text-2xl text-center flex-1 font-semibold">Categorias</h2>
       </div>
       {/* CONTENT */}
-      <div className="bg-gray-50 flex flex-col px-3 gap-5 py-10">
+      <div className="flex flex-1 flex-col px-3 gap-5 py-10">
         <AdminCategoryCard />
         <AdminCategoryCard />
         <AdminCategoryCard />
@@ -22,7 +22,7 @@ const AdminCategories = () => {
         <AdminCategoryCard />
       </div>
       <div className="px-3">
-        <button className="text-white mb-4 py-3 px-3 rounded-md text-sm w-full bg-[#EC6D13] cursor-pointer">
+        <button className="mb-4 py-3 px-3 rounded-md text-sm w-full bg-primary cursor-pointer">
           + Anadir Nueva Categoria
         </button>
       </div>

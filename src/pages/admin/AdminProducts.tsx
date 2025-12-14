@@ -9,12 +9,12 @@ const ProductsAdmin = () => {
   return (
     <AdminLayout>
       {/* HEADER */}
-      <div className='flex items-center justify-between p-4 shadow-sm z-10'>
+      <div className='bg-background text-foreground flex p-4 border-b'>
         <ArrowLeft onClick={() => navigate('/admin/dashboard')} strokeWidth={3} className='cursor-pointer' />
         <h2 className="text-2xl text-center flex-1 font-semibold">Productos</h2>
       </div>
       {/* CONTENT */}
-      <div className="bg-gray-50 flex-1 flex flex-col px-3 gap-5 py-10">
+      <div className="flex-1 flex flex-col px-3 gap-5 py-10">
         <AdminProductCard />
         <AdminProductCard />
         <AdminProductCard />
