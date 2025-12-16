@@ -1,4 +1,5 @@
 import { AdminOrderCard } from "@/components/admin/AdminOrderCard"
+import { Button } from "@/components/ui/button"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -14,10 +15,18 @@ const AdminOrders = () => {
         <h2 className="text-2xl text-center flex-1 font-semibold">Ordenes</h2>
       </div>
       <div className="scrollbar-custom text-primary flex justify-evenly overflow-x-auto px-3 py-5">
-        <p className="flex-1 hover:bg-primary/60 hover:text-secondary text-center px-4 py-2 rounded-md cursor-pointer">Todos</p>
-        <p className="flex-1 hover:bg-primary/60 hover:text-secondary text-center px-4 py-2 rounded-md cursor-pointer">Pendientes</p>
-        <p className="flex-1 hover:bg-primary/60 hover:text-secondary text-center px-4 py-2 rounded-md cursor-pointer">Completadas</p>
-        <p className="flex-1 hover:bg-primary/60 hover:text-secondary text-center px-4 py-2 rounded-md cursor-pointer">Rechazadas</p>
+        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+          Todos
+        </Button>
+        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+          Pendientes
+        </Button>
+        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+          Completadas
+        </Button>
+        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+          Rechazadas
+        </Button>
       </div>
       {/* CONTENT */}
       <div className="flex flex-col px-3 gap-5 py-10">

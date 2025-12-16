@@ -1,11 +1,12 @@
+import { Button } from "../ui/button"
 
 
 export const AdminOrderCard = () => {
   return (
-    <div className='bg-card text-primary rounded-md shadow flex flex-col items-center justify-between px-5 py-3'>
+    <div className='bg-card text-primary rounded-md shadow flex flex-col items-center justify-between px-5 py-3 gap-2 outline-1 outline-border'>
       <div className="w-full flex justify-between">
         <div>
-          <p className="text-xl font-semibold">Orden #12345</p>
+          <p className="text-xl font-semibold pb-2">Orden #12345</p>
           <p>Alex</p>
         </div>
         <div className="flex flex-col gap-0.5">
@@ -14,8 +15,12 @@ export const AdminOrderCard = () => {
         </div>
       </div>
       <div className="w-full flex justify-between gap-5 mt-4">
-        <button className="flex-1 text-center outline-1 outline-border py-2 rounded-md">Ver Resumen</button>
-        <button className="flex-1 text-center text-secondary bg-primary py-2 rounded-md">Cambiar Estado</button>
+        <Button variant='outline' className="flex-1 py-4 cursor-pointer">
+          Ver Resumen
+        </Button>
+        <Button variant='default' className="flex-1 py-4 cursor-pointer">
+          Cambiar Estado
+        </Button>
       </div>
     </div>
   )

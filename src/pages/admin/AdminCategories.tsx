@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminCategoryCard } from "@/components/admin/AdminCategoryCard"
+import { Button } from "@/components/ui/button"
 
 
 const AdminCategories = () => {
@@ -22,9 +23,9 @@ const AdminCategories = () => {
         <AdminCategoryCard />
       </div>
       <div className="px-3">
-        <button className="mb-4 py-3 px-3 rounded-md text-sm w-full bg-primary cursor-pointer">
+        <Button className="cursor-pointer w-full my-4 py-5">
           + Anadir Nueva Categoria
-        </button>
+        </Button>
       </div>
     </AdminLayout>
   )
