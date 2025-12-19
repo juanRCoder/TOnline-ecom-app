@@ -14,60 +14,61 @@ datasource db {
 }
 
 model Products {
-  id          String @id @default(uuid())
-  name        String    @unique
-  price       Float
-  stock       Int
-  status      String
-  imageUrl    String?
-  categoryId  String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            String   @id @default(uuid())
+  name          String   @unique
+  price         Float
+  stock         Int
+  status        String
+  imageUrl      String?
+  imagePublicId String?
+  categoryId    String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // relationships
-  Categories     Categories   @relation(fields: [categoryId], references: [id])
-  OrderProducts  OrderProducts[]
+  Categories    Categories      @relation(fields: [categoryId], references: [id])
+  OrderProducts OrderProducts[]
 }
 
 model Categories {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // relationships
-  Products    Products[]
+  Products Products[]
 }
 
 model Orders {
-  id                String   @id @default(uuid())
-  guestUserName     String
-  guestUserPhone    String
-  typeOfDelivery    String
-  guestUserAddress  String?
-  typeOfPayment     String
-  imageVoucher      String?
-  notes             String?
-  total             Float
-  status            String   @default("pending")
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id               String   @id @default(uuid())
+  guestUserName    String
+  guestUserPhone   String
+  typeOfDelivery   String
+  guestUserAddress String?
+  typeOfPayment    String
+  imageVoucher     String?
+  notes            String?
+  total            Float
+  status           String   @default("pending")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   // relationships
-  OrderProducts    OrderProducts[]
+  OrderProducts OrderProducts[]
 }
 
 model OrderProducts {
-  id         String   @id @default(uuid())
-  orderId    String
-  productId  String
-  quantity   Int      @default(1)
-  price      Float
-  subtotal   Float
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int      @default(1)
+  price     Float
+  subtotal  Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // relationships
-  Orders      Orders   @relation(fields: [orderId], references: [id])
-  Products    Products @relation(fields: [productId], references: [id])
+  Orders   Orders   @relation(fields: [orderId], references: [id])
+  Products Products @relation(fields: [productId], references: [id])
 }

@@ -4,5 +4,6 @@ export interface createProductDto {
   stock: number
   status: string
   imageUrl?: string;
+  imagePublicId?: string;
   categoryId: string
 }

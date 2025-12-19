@@ -5,7 +5,7 @@ cloudinary.config();
 export const uploadImageToCloudinary = async (
   buffer: Buffer,
   folder: string,
-  public_id?: string
+  public_id?: string | null
 ): Promise<UploadApiResponse> => {
   return new Promise((res, rej) => {
     const finalPublicId = public_id || `${Date.now()}`;

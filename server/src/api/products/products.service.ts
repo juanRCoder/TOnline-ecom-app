@@ -3,7 +3,6 @@ import { Prisma } from "@generated/prisma/client";
 import { prisma } from "@server/prisma";
 import { createProductDto } from "@server/api/products/products.dto";
 import { uploadImageToCloudinary } from "@server/services/cloudinary";
-import { UploadApiResponse } from "cloudinary";
 
 dotenv.config();
 
@@ -53,9 +52,13 @@ const getByCategoryId = async (categoryId: string) => {
 const create = async (data: createProductDto, buffer?: Buffer) => {
   const folder = `${process.env.ROOT_FOLDER}/products-images`;
 
-  let imgResult: UploadApiResponse | null = null;
+  let imageUrl: string | null = null;
+  let imagePublicId: string | null = null;
+
   if (buffer) {
-    imgResult = await uploadImageToCloudinary(buffer, folder);
+    const uploadResult = await uploadImageToCloudinary(buffer, folder);
+    imageUrl = uploadResult.secure_url;
+    imagePublicId = uploadResult.public_id;
   }
 
   await prisma.products.create({
@@ -65,7 +68,8 @@ const create = async (data: createProductDto, buffer?: Buffer) => {
       stock: Number(data.stock) || 10,
       status: data.status || "available",
       categoryId: data.categoryId || "",
-      imageUrl: imgResult?.secure_url ?? null,
+      imageUrl,
+      imagePublicId,
     },
   });
 };
@@ -85,9 +89,44 @@ const getById = async (id: string) => {
   });
 };
 
+const update = async (
+  productId: string,
+  data: Partial<createProductDto>,
+  buffer?: Buffer
+) => {
+  const folder = `${process.env.ROOT_FOLDER}/products-images`;
+
+  let imageUrl: string | undefined = data.imageUrl;
+  let imagePublicId: string | undefined = data.imagePublicId;
+
+  if (buffer) {
+    const uploadResult = await uploadImageToCloudinary(
+      buffer,
+      folder,
+      imagePublicId
+    );
+    imageUrl = uploadResult.secure_url;
+    imagePublicId = uploadResult.public_id;
+  }
+
+  await prisma.products.update({
+    where: { id: productId },
+    data: {
+      name: data.name,
+      price: Number(data.price),
+      stock: Number(data.stock) || 10,
+      status: data.status || "available",
+      categoryId: data.categoryId || "",
+      imageUrl,
+      imagePublicId,
+    },
+  });
+};
+
 export const ProductServices = {
   getAll,
   getByCategoryId,
   create,
   getById,
+  update,
 };

@@ -5,6 +5,7 @@ import {
   getByCategoryId,
   create,
   getById,
+  update,
 } from "@server/api/products/products.controller";
 import { uploader } from "@server/middlewares/imageUpload.middlware";
 
@@ -17,5 +18,6 @@ productRouter.get("/", getAll);
 productRouter.get("/category/:id", validateUUID("category"), getByCategoryId);
 productRouter.post("/", uploader("imageProduct"), create);
 productRouter.get("/:id", validateUUID("product"), getById);
+productRouter.patch("/:id", validateUUID("product"), uploader("imageProduct"), update);
 
 export default productRouter;

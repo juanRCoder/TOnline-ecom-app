@@ -93,3 +93,20 @@ export const getById = async (
     next(error);
   }
 };
+
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const imageProduct = req.file?.buffer;
+
+    await ProductServices.update(id, data, imageProduct);
+  } catch (error) {
+    console.error("[Controller: updateProduct]", error);
+    next(error);
+  }
+};
