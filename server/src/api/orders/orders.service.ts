@@ -51,7 +51,7 @@ const create = async (
   const orderPayload = {
     ...orderData,
     total: totalProducts,
-    orderProducts: {
+    OrderProducts: {
       createMany: { data: orderProducts },
     },
   };
@@ -60,14 +60,14 @@ const create = async (
   const newOrder = await prisma.orders.create({
     data: orderPayload,
     include: {
-      orderProducts: {
-        include: { product: true },
+      OrderProducts: {
+        include: { Products: true },
       },
     },
   });
 
-  const voucherProducts = newOrder?.orderProducts.map((op) => ({
-    name: op.product.name,
+  const voucherProducts = newOrder?.OrderProducts.map((op) => ({
+    name: op.Products.name,
     quantity: op.quantity,
     subtotal: op.subtotal,
   }));

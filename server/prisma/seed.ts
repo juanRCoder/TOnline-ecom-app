@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
-import { prisma } from '../src/prisma'
+import { prisma } from "../src/prisma";
 
 async function main() {
   const categories = [

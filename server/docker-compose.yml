@@ -1,12 +1,11 @@
 version: "3.9"
 
 services:
-  db:
-    container_name: dev_db
-    image: postgres
-    restart: always
+  postgres:
+    restart: unless-stopped
+    image: postgres:16-alpine
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
