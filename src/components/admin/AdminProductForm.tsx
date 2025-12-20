@@ -1,9 +1,11 @@
-import { Button } from "../ui/button"
-import { DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Dialog } from "../ui/dialog"
-import { Field, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
-import { ScrollArea } from "../ui/scroll-area"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Button,
+  DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Dialog,
+  Field, FieldLabel,
+  Input,
+  ScrollArea,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
+} from "@/components/ui"
 
 
 export const AdminProductForm = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {

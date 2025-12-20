@@ -1,8 +1,8 @@
-import { AdminOrderCard } from "@/components/admin/AdminOrderCard"
-import { Button } from "@/components/ui/button"
-import { AdminLayout } from "@/layouts/AdminLayout"
 import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { AdminLayout } from "@/layouts/AdminLayout"
+import { AdminOrderCard } from "@/components/admin/AdminOrderCard"
+import { Button } from "@/components/ui"
 
 const AdminOrders = () => {
   const navigate = useNavigate()

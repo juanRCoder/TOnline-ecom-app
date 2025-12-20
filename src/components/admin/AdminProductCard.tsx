@@ -1,6 +1,5 @@
 import { Edit2, Trash2 } from "lucide-react"
-import { Button } from "../ui/button"
-import { Card, CardContent } from "../ui/card"
+import { Button, Card, CardContent } from "@/components/ui"
 
 export const AdminProductCard = () => {
   return (

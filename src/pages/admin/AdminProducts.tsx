@@ -1,11 +1,10 @@
+import { useState } from "react"
 import { ArrowLeft, Plus } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminProductCard } from "@/components/admin/AdminProductCard"
-import { Button } from "@/components/ui/button"
 import { AdminProductForm } from "@/components/admin/AdminProductForm"
-import { useState } from "react"
-
+import { Button } from "@/components/ui"
 
 const ProductsAdmin = () => {
   const navigate = useNavigate()

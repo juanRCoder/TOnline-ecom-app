@@ -1,6 +1,5 @@
 import React from "react";
-import { Input } from "./ui/input";
-import { Field, FieldLabel } from "./ui/field";
+import { Input, Field, FieldLabel } from "@/components/ui";
 
 type FormInputProps = {
   id: string;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ShopLayout from "@/layouts/ShopLayout";
 import { CartItem } from "@/components/CartItem";
 import { useCartStore } from "@/stores/cart.store";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 
 
 const Cart = () => {

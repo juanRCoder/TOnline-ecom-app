@@ -2,8 +2,7 @@ import { Download, CreditCard, User2, Store, Coins } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ShopLayout from "@/layouts/ShopLayout";
 import { useVoucherStore } from "@/stores/voucher.store";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, Button } from "@/components/ui";
 
 
 const Voucher = () => {

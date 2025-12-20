@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminCategoryCard } from "@/components/admin/AdminCategoryCard"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui"
 
 
 const AdminCategories = () => {

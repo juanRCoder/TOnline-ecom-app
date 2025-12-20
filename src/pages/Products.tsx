@@ -3,7 +3,7 @@ import { Search, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ShopLayout from '@/layouts/ShopLayout';
 import { ProductCard } from '@/components/ProductCard';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { useDebounce } from '@/hooks/useDebounce';
