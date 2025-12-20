@@ -65,9 +65,9 @@ const create = async (data: createProductDto, buffer?: Buffer) => {
     data: {
       name: data.name,
       price: Number(data.price),
-      stock: Number(data.stock) || 10,
-      status: data.status || "available",
-      categoryId: data.categoryId || "",
+      stock: Number(data.stock),
+      status: data.status ,
+      categoryId: data.categoryId,
       imageUrl,
       imagePublicId,
     },
@@ -90,7 +90,7 @@ const getById = async (id: string) => {
 };
 
 const update = async (
-  productId: string,
+  id: string,
   data: Partial<createProductDto>,
   buffer?: Buffer
 ) => {
@@ -110,16 +110,22 @@ const update = async (
   }
 
   await prisma.products.update({
-    where: { id: productId },
+    where: { id },
     data: {
       name: data.name,
       price: Number(data.price),
-      stock: Number(data.stock) || 10,
-      status: data.status || "available",
-      categoryId: data.categoryId || "",
+      stock: Number(data.stock),
+      status: data.status,
+      categoryId: data.categoryId,
       imageUrl,
       imagePublicId,
     },
+  });
+};
+
+const remove = async (id: string) => {
+  await prisma.products.delete({
+    where: { id },
   });
 };
 
@@ -129,4 +135,5 @@ export const ProductServices = {
   create,
   getById,
   update,
+  remove
 };

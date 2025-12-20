@@ -110,3 +110,23 @@ export const update = async (
     next(error);
   }
 };
+
+export const remove = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await ProductServices.remove(id);
+
+    return res.status(HttpStatus.OK).json(
+      apiResponse(true, {
+        message: "Product deleted successfully",
+      })
+    );
+  } catch (error) {
+    console.error("[Controller: deleteProduct]", error);
+    next(error);
+  }
+}

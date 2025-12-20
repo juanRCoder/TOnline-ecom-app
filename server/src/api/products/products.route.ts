@@ -6,6 +6,7 @@ import {
   create,
   getById,
   update,
+  remove,
 } from "@server/api/products/products.controller";
 import { uploader } from "@server/middlewares/imageUpload.middlware";
 
@@ -19,5 +20,6 @@ productRouter.get("/category/:id", validateUUID("category"), getByCategoryId);
 productRouter.post("/", uploader("imageProduct"), create);
 productRouter.get("/:id", validateUUID("product"), getById);
 productRouter.patch("/:id", validateUUID("product"), uploader("imageProduct"), update);
+productRouter.delete("/:id", validateUUID("product"), remove);
 
 export default productRouter;
