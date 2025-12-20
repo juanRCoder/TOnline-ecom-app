@@ -2,7 +2,10 @@ import dotenv from "dotenv";
 import { Prisma } from "@generated/prisma/client";
 import { prisma } from "@server/prisma";
 import { createProductDto } from "@server/api/products/products.dto";
-import { uploadImageToCloudinary } from "@server/services/cloudinary";
+import {
+  deleteImageFromCloudinary,
+  uploadImageToCloudinary,
+} from "@server/services/cloudinary";
 
 dotenv.config();
 
@@ -66,7 +69,7 @@ const create = async (data: createProductDto, buffer?: Buffer) => {
       name: data.name,
       price: Number(data.price),
       stock: Number(data.stock),
-      status: data.status ,
+      status: data.status,
       categoryId: data.categoryId,
       imageUrl,
       imagePublicId,
@@ -81,6 +84,7 @@ const getById = async (id: string) => {
       id: true,
       name: true,
       imageUrl: true,
+      imagePublicId: true,
       price: true,
       stock: true,
       status: true,
@@ -124,9 +128,10 @@ const update = async (
 };
 
 const remove = async (id: string) => {
-  await prisma.products.delete({
+  const product = await prisma.products.delete({
     where: { id },
   });
+  if (product.imagePublicId) deleteImageFromCloudinary(product.imagePublicId);
 };
 
 export const ProductServices = {
@@ -135,5 +140,5 @@ export const ProductServices = {
   create,
   getById,
   update,
-  remove
+  remove,
 };

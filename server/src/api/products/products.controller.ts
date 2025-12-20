@@ -129,4 +129,4 @@ export const remove = async (
     console.error("[Controller: deleteProduct]", error);
     next(error);
   }
-}
+};
