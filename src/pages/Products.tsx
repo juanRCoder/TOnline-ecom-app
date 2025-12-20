@@ -10,6 +10,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useCartStore } from '@/stores/cart.store';
 import type { productList } from '@/types/products.type';
 import type { categoryList } from '@/types/categories.type';
+import { FormInput } from '@/components/FormInput';
 
 
 const Products = () => {
@@ -61,12 +62,11 @@ const Products = () => {
       <div className='pt-4 px-4 flex flex-col gap-4'>
         <div className='flex gap-2 bg-input rounded-xl p-3'>
           <Search />
-          <input
-            type='text'
+          <FormInput
+            id='search'
             placeholder='Buscar productos'
-            value={searchTerm}
             onChange={(e) => handleSearchProducts(e)}
-            className='w-full outline-none border-none'
+            className="border-0 ring-0 focus:ring-0 focus-visible:ring-0"
           />
         </div>
         <div className="scrollbar-custom flex gap-2 overflow-x-auto">
