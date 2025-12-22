@@ -8,7 +8,7 @@ import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useCartStore } from '@/stores/cart.store';
-import type { productList } from '@/types/products.type';
+import type { ProductType } from '@/types/products.type';
 import type { categoryList } from '@/types/categories.type';
 import { FormInput } from '@/components/FormInput';
 
@@ -102,7 +102,7 @@ const Products = () => {
       {!loading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {filteredProducts && filteredProducts.length > 0 ? (
-            filteredProducts.map((prd: productList) => (
+            filteredProducts.map((prd: ProductType) => (
               <ProductCard key={prd.id} product={prd} />
             ))
           ) : (

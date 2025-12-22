@@ -1,12 +1,12 @@
 const API = import.meta.env.VITE_API_DEV;
 
-export const getAllProducts = async (searchTerm?: string) => {
+export const getAll = async (searchTerm?: string, isAdmin: boolean = false) => {
   try {
-    const queryParam = searchTerm
-      ? `?searchTerm=${encodeURIComponent(searchTerm)}`
-      : "";
+    const params = new URLSearchParams();
+    if (searchTerm) params.append("searchTerm", searchTerm);
+    if (isAdmin) params.append("isAdmin", "true");
 
-    const response = await fetch(`${API}/products${queryParam}`, {
+    const response = await fetch(`${API}/products?${params.toString()}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const getAllProducts = async (searchTerm?: string) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[getAllProducts]", error);
+    console.error("[getAll]", error);
     throw error;
   }
 };

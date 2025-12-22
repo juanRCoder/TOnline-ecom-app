@@ -23,7 +23,7 @@ const getAll = async (searchTerm?: string, isAdminFlag?: boolean) => {
     imageUrl: true,
     price: true,
     stock: true,
-    category: { select: { name: true } },
+    Categories: { select: { name: true } },
   };
 
   const selectPublic = {

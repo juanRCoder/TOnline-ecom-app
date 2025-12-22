@@ -9,8 +9,13 @@ import {
 } from "@/components/ui"
 import { FormImg } from "@/components/FormImg";
 
+type AdminProductFormProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  mode?: 'create' | 'edit';
+}
 
-export const AdminProductForm = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
+export const AdminProductForm = ({ open, onOpenChange, mode = 'create' }: AdminProductFormProps) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -22,7 +27,7 @@ export const AdminProductForm = ({ open, onOpenChange }: { open: boolean; onOpen
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='flex max-h-[min(600px,90vh)] flex-col gap-0 p-0 sm:max-w-xl '>
         <DialogHeader className='contents space-y-0 text-left'>
-          <DialogTitle className='border-b px-6 py-4'>Nuevo Producto</DialogTitle>
+          <DialogTitle className='border-b px-6 py-4'>{mode === 'create' ? 'Nuevo' : 'Editar'} Producto</DialogTitle>
           <ScrollArea className='flex max-h-full flex-col overflow-hidden'>
             <DialogDescription asChild>
               <div className="p-6 grid sm:grid-cols-2 gap-4">
@@ -79,7 +84,7 @@ export const AdminProductForm = ({ open, onOpenChange }: { open: boolean; onOpen
                 </Button>
               </DialogClose>
               <Button type='button' className="cursor-pointer">
-                Crear Producto
+                {mode === 'create' ? 'Crear' : 'Actualizar'} Producto
               </Button>
             </DialogFooter>
           </ScrollArea>

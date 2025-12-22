@@ -1,9 +1,9 @@
 import { useCartStore } from "@/stores/cart.store";
-import type { productList } from "@/types/products.type";
+import type { ProductType } from "@/types/products.type";
 import { Card, CardContent, Button } from "@/components/ui";
 
 type ProductCardProps = {
-  product: productList
+  product: ProductType
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
