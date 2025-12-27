@@ -10,7 +10,7 @@ export const uploader = (fieldName: string) => {
     storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
     fileFilter: (_req, file, callback) => {
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
       if (!allowedTypes.includes(file.mimetype)) {
         return callback(new Error("Tipo de archivo no permitido"));
       }
