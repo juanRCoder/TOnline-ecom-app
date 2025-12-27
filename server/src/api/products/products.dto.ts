@@ -6,4 +6,5 @@ export interface createProductDto {
   imageUrl?: string;
   imagePublicId?: string;
   categoryId: string;
+  removeImage?: string // boolean
 }

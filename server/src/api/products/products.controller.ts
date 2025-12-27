@@ -103,8 +103,13 @@ export const update = async (
     const { id } = req.params;
     const data = req.body;
     const imageProduct = req.file?.buffer;
-
     await ProductServices.update(id, data, imageProduct);
+
+    return res.status(HttpStatus.CREATED).json(
+      apiResponse(true, {
+        message: "Product updated successfully",
+      })
+    );
   } catch (error) {
     console.error("[Controller: updateProduct]", error);
     next(error);

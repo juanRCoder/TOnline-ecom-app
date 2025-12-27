@@ -100,8 +100,8 @@ const update = async (
 ) => {
   const folder = `${process.env.ROOT_FOLDER}/products-images`;
 
-  let imageUrl: string | undefined = data.imageUrl;
-  let imagePublicId: string | undefined = data.imagePublicId;
+  let imageUrl: string | undefined | null = data.imageUrl;
+  let imagePublicId: string | undefined | null = data.imagePublicId;
 
   if (buffer) {
     const uploadResult = await uploadImageToCloudinary(
@@ -112,7 +112,11 @@ const update = async (
     imageUrl = uploadResult.secure_url;
     imagePublicId = uploadResult.public_id;
   }
-
+  if (data.removeImage === "true" && imagePublicId) {
+    await deleteImageFromCloudinary(imagePublicId);
+    imageUrl = null;
+    imagePublicId = null;
+  }
   await prisma.products.update({
     where: { id },
     data: {
