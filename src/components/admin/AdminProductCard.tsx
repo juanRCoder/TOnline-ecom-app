@@ -1,15 +1,31 @@
 import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 import { Edit2, Trash2 } from "lucide-react"
 import { Button, Card, CardContent } from "@/components/ui"
 import type { ProductType } from "@/types/products.type"
 import { AdminProductForm } from "./AdminProductForm"
+import { useProducts } from "@/hooks/useProducts"
 
 type AdminProductCardProps = {
   product: ProductType
 }
 
 export const AdminProductCard = ({ product }: AdminProductCardProps) => {
+  const queryClient = useQueryClient();
+
   const [modalForm, setModalForm] = useState<boolean>(false)
+
+  const { mutate: remove } = useProducts.useRemove({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["allProducts"],
+      });
+    },
+    onError: (message) => {
+      console.error("Error deleted product:", message);
+    },
+  })
+
 
   return (
     <Card className='flex flex-row items-center justify-between px-4'>
@@ -31,11 +47,11 @@ export const AdminProductCard = ({ product }: AdminProductCardProps) => {
         <Button onClick={() => setModalForm(true)} variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
           <Edit2 className="text-foreground size-5" />
         </Button>
-        <Button variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
+        <Button onClick={() => remove(product.id)} variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
           <Trash2 className="text-destructive size-5" />
         </Button>
       </CardContent>
-      <AdminProductForm open={modalForm} onOpenChange={setModalForm} mode="edit" id={product.id}/>
+      <AdminProductForm open={modalForm} onOpenChange={setModalForm} mode="edit" id={product.id} />
     </Card>
   )
 }

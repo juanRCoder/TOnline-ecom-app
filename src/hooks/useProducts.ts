@@ -3,6 +3,7 @@ import {
   getAll,
   getByCategoryId,
   getById,
+  remove,
   update,
 } from "@/services/product.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -73,10 +74,23 @@ const useUpdate = ({ onSuccess, onError }: UseCreateProps) => {
   });
 };
 
+const useRemove = ({ onSuccess, onError }: UseCreateProps) => {
+  return useMutation({
+    mutationFn: remove,
+    onSuccess(data) {
+      if (onSuccess) onSuccess(data);
+    },
+    onError(error) {
+      if (onError) onError(String(error));
+    },
+  });
+};
+
 export const useProducts = {
   AllProducts,
   ProductsByCategory,
   useGetById,
   useCreate,
-  useUpdate
+  useUpdate,
+  useRemove
 };
