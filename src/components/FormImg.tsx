@@ -1,13 +1,14 @@
 import { Package } from 'lucide-react'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button } from './ui';
 
 interface ImageUploadProps {
   alt: string
+  value?: string
   onChange?: (file: File | null) => void
 }
 
-export const FormImg = ({ alt, onChange }: ImageUploadProps) => {
+export const FormImg = ({ alt, value, onChange }: ImageUploadProps) => {
   const [imagePreview, setImagePreview] = useState<string>('')
   const fileRef = useRef<HTMLInputElement | null>(null)
 
@@ -26,6 +27,11 @@ export const FormImg = ({ alt, onChange }: ImageUploadProps) => {
     onChange?.(null)
   };
 
+  useEffect(() => {
+    if (value) {
+      setImagePreview(value)
+    }
+  }, [value])
 
   return (
     <>
