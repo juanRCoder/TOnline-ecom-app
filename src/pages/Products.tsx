@@ -21,8 +21,8 @@ const Products = () => {
   const navigate = useNavigate()
   const { items } = useCartStore()
   const debouncedSearch = useDebounce(searchTerm, 400);
-  const { data: allProducts, isLoading: loadingAll, error: errorAll } = useProducts.AllProducts(debouncedSearch)
-  const { data: productsByCategory, isLoading: loadingCategory, error: errorCategory } = useProducts.ProductsByCategory(categoryId)
+  const { data: allProducts, isLoading: loadingAll, error: errorAll } = useProducts.useGetAll(debouncedSearch)
+  const { data: productsByCategory, isLoading: loadingCategory, error: errorCategory } = useProducts.useByCategoryId(categoryId)
   const { data: allCategories, isLoading: loadingCategories, error: errorCategories } = useCategories.AllCategories()
 
   const handleProductsByCategory = (ctg: CategoryType) => {

@@ -8,7 +8,7 @@ import {
 } from "@/services/product.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-const AllProducts = (searchTerm?: string, isAdmin: boolean = false) => {
+const useGetAll = (searchTerm?: string, isAdmin: boolean = false) => {
   return useQuery({
     queryKey: ["allProducts", searchTerm, isAdmin],
     queryFn: () => getAll(searchTerm, isAdmin),
@@ -20,7 +20,7 @@ const AllProducts = (searchTerm?: string, isAdmin: boolean = false) => {
   });
 };
 
-const ProductsByCategory = (id: string) => {
+const useByCategoryId = (id: string) => {
   return useQuery({
     queryKey: ["getByCategoryId", id],
     queryFn: () => getByCategoryId(id),
@@ -36,13 +36,12 @@ const useGetById = (id: string) => {
     queryKey: ["getById", id],
     queryFn: () => getById(id),
     enabled: !!id,
-    staleTime: 0,
     retry: 1,
     refetchOnWindowFocus: false,
   });
 };
 
-type UseCreateProps = {
+type UseMutationProps = {
   onSuccess?: (data: {
     success: boolean;
     payload: { message: string };
@@ -50,7 +49,7 @@ type UseCreateProps = {
   onError?: (message: string) => void;
 };
 
-const useCreate = ({ onSuccess, onError }: UseCreateProps) => {
+const useCreate = ({ onSuccess, onError }: UseMutationProps) => {
   return useMutation({
     mutationFn: create,
     onSuccess(data) {
@@ -62,7 +61,7 @@ const useCreate = ({ onSuccess, onError }: UseCreateProps) => {
   });
 };
 
-const useUpdate = ({ onSuccess, onError }: UseCreateProps) => {
+const useUpdate = ({ onSuccess, onError }: UseMutationProps) => {
   return useMutation({
     mutationFn: update,
     onSuccess(data) {
@@ -74,7 +73,7 @@ const useUpdate = ({ onSuccess, onError }: UseCreateProps) => {
   });
 };
 
-const useRemove = ({ onSuccess, onError }: UseCreateProps) => {
+const useRemove = ({ onSuccess, onError }: UseMutationProps) => {
   return useMutation({
     mutationFn: remove,
     onSuccess(data) {
@@ -87,8 +86,8 @@ const useRemove = ({ onSuccess, onError }: UseCreateProps) => {
 };
 
 export const useProducts = {
-  AllProducts,
-  ProductsByCategory,
+  useGetAll,
+  useByCategoryId,
   useGetById,
   useCreate,
   useUpdate,

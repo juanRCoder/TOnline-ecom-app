@@ -42,11 +42,9 @@ export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: Ad
     },
   })
   const { mutate: update } = useProducts.useUpdate({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ["allProducts"],
-      });
-      console.log(data)
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allProducts"] });
+      queryClient.invalidateQueries({ queryKey: ["getById", id] });
       onOpenChange(false)
     },
     onError: (message) => {

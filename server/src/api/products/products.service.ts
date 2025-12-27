@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Prisma } from "@generated/prisma/client";
 import { prisma } from "@server/prisma";
-import { createProductDto } from "@server/api/products/products.dto";
+import { createProductDto, updateProductDto } from "@server/api/products/products.dto";
 import {
   deleteImageFromCloudinary,
   uploadImageToCloudinary,
@@ -95,7 +95,7 @@ const getById = async (id: string) => {
 
 const update = async (
   id: string,
-  data: Partial<createProductDto>,
+  data: updateProductDto,
   buffer?: Buffer
 ) => {
   const folder = `${process.env.ROOT_FOLDER}/products-images`;
@@ -112,8 +112,9 @@ const update = async (
     imageUrl = uploadResult.secure_url;
     imagePublicId = uploadResult.public_id;
   }
-  if (data.removeImage === "true" && imagePublicId) {
-    await deleteImageFromCloudinary(imagePublicId);
+
+  if (data.removeImage === "true") {
+    await deleteImageFromCloudinary(imagePublicId || '');
     imageUrl = null;
     imagePublicId = null;
   }

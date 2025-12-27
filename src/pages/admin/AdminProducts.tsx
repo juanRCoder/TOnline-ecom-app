@@ -16,7 +16,7 @@ const ProductsAdmin = () => {
     data: allProducts,
     isLoading: loadingAll,
     error: errorAll
-  } = useProducts.AllProducts("", true);
+  } = useProducts.useGetAll("", true);
 
   return (
     <AdminLayout>

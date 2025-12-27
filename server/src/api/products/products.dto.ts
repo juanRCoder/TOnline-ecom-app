@@ -6,5 +6,8 @@ export interface createProductDto {
   imageUrl?: string;
   imagePublicId?: string;
   categoryId: string;
-  removeImage?: string // boolean
+}
+
+export interface updateProductDto extends Partial<createProductDto> {
+  removeImage?: string; // boolean flag in string
 }

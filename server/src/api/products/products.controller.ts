@@ -45,7 +45,7 @@ export const getByCategoryId = async (
 
     return res.status(HttpStatus.OK).json(apiResponse(true, products));
   } catch (error) {
-    console.error("[Controller: getProductsByCategoryId]", error);
+    console.error("[Controller: getByCategoryId]", error);
     next(error);
   }
 };
@@ -89,7 +89,7 @@ export const getById = async (
 
     return res.status(HttpStatus.OK).json(apiResponse(true, product));
   } catch (error) {
-    console.error("[Controller: getProductById]", error);
+    console.error("[Controller: getById]", error);
     next(error);
   }
 };
@@ -111,7 +111,7 @@ export const update = async (
       })
     );
   } catch (error) {
-    console.error("[Controller: updateProduct]", error);
+    console.error("[Controller: update]", error);
     next(error);
   }
 };
@@ -131,7 +131,7 @@ export const remove = async (
       })
     );
   } catch (error) {
-    console.error("[Controller: deleteProduct]", error);
+    console.error("[Controller: remove]", error);
     next(error);
   }
 };

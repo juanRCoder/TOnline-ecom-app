@@ -17,7 +17,7 @@ export const getAll = async (searchTerm?: string, isAdmin: boolean = false) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[getAll]", error);
+    console.error("[Service: getAll]", error);
     throw error;
   }
 };
@@ -35,7 +35,7 @@ export const getByCategoryId = async (id: string) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[getByCategoryId]", error);
+    console.error("[Service: getByCategoryId]", error);
     throw error;
   }
 };
@@ -53,7 +53,7 @@ export const getById = async (id: string) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[getById]", error);
+    console.error("[Service: getById]", error);
     throw error;
   }
 };
@@ -69,7 +69,7 @@ export const create = async (data: FormData) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[create]", error);
+    console.error("[Service: create]", error);
     throw error;
   }
 };
@@ -85,7 +85,7 @@ export const update = async ({ data, id }: { data: FormData; id: string }) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[update]", update);
+    console.error("[Service: update]", update);
     throw error;
   }
 };
@@ -100,7 +100,7 @@ export const remove = async (id: string) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[update]", update);
+    console.error("[Service: update]", update);
     throw error;
   }
 };
