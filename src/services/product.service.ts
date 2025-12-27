@@ -73,3 +73,19 @@ export const create = async (data: FormData) => {
     throw error;
   }
 };
+
+export const update = async ({ data, id }: { data: FormData; id: string }) => {
+  try {
+    const response = await fetch(`${API}/products/${id}`, {
+      method: "PATCH",
+      body: data,
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
+  } catch (error) {
+    console.error("[update]", update);
+    throw error;
+  }
+};

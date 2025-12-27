@@ -3,6 +3,7 @@ import {
   getAll,
   getByCategoryId,
   getById,
+  update,
 } from "@/services/product.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -34,7 +35,7 @@ const useGetById = (id: string) => {
     queryKey: ["getById", id],
     queryFn: () => getById(id),
     enabled: !!id,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
     retry: 1,
     refetchOnWindowFocus: false,
   });
@@ -50,13 +51,24 @@ type UseCreateProps = {
 
 const useCreate = ({ onSuccess, onError }: UseCreateProps) => {
   return useMutation({
-    mutationFn: async (data: FormData) => create(data),
+    mutationFn: create,
     onSuccess(data) {
       if (onSuccess) onSuccess(data);
     },
     onError(error) {
-      if (onError)
-        onError(String(error));
+      if (onError) onError(String(error));
+    },
+  });
+};
+
+const useUpdate = ({ onSuccess, onError }: UseCreateProps) => {
+  return useMutation({
+    mutationFn: update,
+    onSuccess(data) {
+      if (onSuccess) onSuccess(data);
+    },
+    onError(error) {
+      if (onError) onError(String(error));
     },
   });
 };
@@ -66,4 +78,5 @@ export const useProducts = {
   ProductsByCategory,
   useGetById,
   useCreate,
+  useUpdate
 };

@@ -41,6 +41,18 @@ export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: Ad
       console.error("Error creating product:", message);
     },
   })
+  const { mutate: update } = useProducts.useUpdate({
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["allProducts"],
+      });
+      console.log(data)
+      onOpenChange(false)
+    },
+    onError: (message) => {
+      console.error("Error updating product:", message);
+    }
+  })
 
   const {
     register,
@@ -60,29 +72,37 @@ export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: Ad
     const formData = new FormData()
     for (const key in data) {
       const value = data[key as keyof TypeProductForm]
+      if (mode === "edit" && key === "imageUrl" && value === null) {
+        formData.append("removeImage", "true");
+        continue;
+      }
+      if (value === null || value === undefined) continue;
       formData.append(key, value)
     }
-    // console.log
+
     // for (const [key, value] of formData.entries()) {
     //   console.log(key, value)
     // }
-    create(formData);
+    if (mode === 'edit' && id) update({ data: formData, id });
+    else create(formData)
   }
 
   // lifecycles
   useEffect(() => {
-    if (product && mode === 'edit') {
-      reset({
-        name: product.payload.name,
-        price: product.payload.price,
-        stock: product.payload.stock,
-        status: product.payload.status,
-        categoryId: product.payload.Categories.id,
-        imageUrl: product.payload.imageUrl,
-        imagePublicId: product.payload.imagePublicId,
-      })
-    }
-  }, [reset, product, mode])
+    if (!open) return
+    if (mode !== 'edit') return
+    if (!product) return
+
+    reset({
+      name: product.payload.name,
+      price: product.payload.price,
+      stock: product.payload.stock,
+      status: product.payload.status,
+      categoryId: product.payload.Categories.id,
+      imageUrl: product.payload.imageUrl,
+      imagePublicId: product.payload.imagePublicId,
+    })
+  }, [open, mode, product, reset])
 
   useEffect(() => {
     if (!open) {
@@ -189,9 +209,19 @@ export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: Ad
                   </Field>
                   <Field>
                     <FieldLabel>Imagen</FieldLabel>
-                    <FormImg
-                      onChange={(file) => setImageFile(file)}
-                      alt="Imagen del producto"
+                    <Controller
+                      name="imageUrl"
+                      control={control}
+                      render={({ field }) => (
+                        <FormImg
+                          alt="Imagen del producto"
+                          value={typeof field.value === 'string' ? field.value : ''}
+                          onChange={(file) => {
+                            field.onChange(file)
+                            setImageFile(file)
+                          }}
+                        />
+                      )}
                     />
                   </Field>
                 </div>
