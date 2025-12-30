@@ -14,14 +14,9 @@ export const getAll = async (
 
   try {
     const products = await ProductServices.getAll(term, isAdminFlag);
-
-    if (!products.length) {
-      return res.status(HttpStatus.OK).json(apiResponse(true, []));
-    }
-
     return res.status(HttpStatus.OK).json(apiResponse(true, products));
   } catch (error) {
-    console.error("[Controller: getAll]", error);
+    console.error("[Controller getAll]", error);
     next(error);
   }
 };
@@ -55,9 +50,9 @@ export const create = async (
   res: Response,
   next: NextFunction
 ) => {
+  const data = req.body;
+  const imageProduct = req.file?.buffer;
   try {
-    const data = req.body;
-    const imageProduct = req.file?.buffer;
     await ProductServices.create(data, imageProduct);
 
     return res.status(HttpStatus.CREATED).json(
@@ -99,10 +94,10 @@ export const update = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { id } = req.params;
+  const data = req.body;
+  const imageProduct = req.file?.buffer;
   try {
-    const { id } = req.params;
-    const data = req.body;
-    const imageProduct = req.file?.buffer;
     await ProductServices.update(id, data, imageProduct);
 
     return res.status(HttpStatus.CREATED).json(

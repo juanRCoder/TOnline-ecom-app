@@ -9,7 +9,7 @@ import {
 
 dotenv.config();
 
-const getAll = async (searchTerm?: string, isAdminFlag?: boolean) => {
+const getAll = (searchTerm?: string, isAdminFlag?: boolean) => {
   let whereConditions;
   if (searchTerm) {
     whereConditions = {
@@ -33,15 +33,13 @@ const getAll = async (searchTerm?: string, isAdminFlag?: boolean) => {
     price: true,
   };
 
-  const all = await prisma.products.findMany({
+  return prisma.products.findMany({
     where: whereConditions,
     select: isAdminFlag ? selectAdmin : selectPublic,
   });
-
-  return all;
 };
 
-const getByCategoryId = async (categoryId: string) => {
+const getByCategoryId = (categoryId: string) => {
   return prisma.products.findMany({
     where: { categoryId },
     select: {
@@ -77,7 +75,7 @@ const create = async (data: createProductDto, buffer?: Buffer) => {
   });
 };
 
-const getById = async (id: string) => {
+const getById = (id: string) => {
   return prisma.products.findUnique({
     where: { id },
     select: {
