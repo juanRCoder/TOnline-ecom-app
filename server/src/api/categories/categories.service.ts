@@ -1,7 +1,6 @@
 import { prisma } from "@server/prisma";
 import { createCategoryDto } from "./categories.dto";
 import { errorPrisma } from "@server/middlewares/errorHandler.middleware";
-import { PrismaErrorCode } from "@server/constants/PrismaErrorCode";
 
 const getAll = () => {
   return prisma.categories.findMany({
@@ -12,14 +11,17 @@ const getAll = () => {
   });
 };
 
-const getById = (id: string) => {
-  return prisma.categories.findUnique({
+const getById = async (id: string) => {
+  const category = await prisma.categories.findUnique({
     where: { id },
     select: {
       id: true,
       name: true,
     },
   });
+
+  if (!category) throw new Error(`Category with ${id} not found`);
+  return category
 };
 
 const create = async (data: createCategoryDto) => {
@@ -34,7 +36,7 @@ const create = async (data: createCategoryDto) => {
       },
     });
   } catch (error) {
-    if (errorPrisma(error, PrismaErrorCode.UNIQUE_CONSTRAINT)) {
+    if (errorPrisma(error, "P2002")) {
       throw new Error("The category already exists");
     }
     throw error;
