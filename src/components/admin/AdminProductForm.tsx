@@ -17,14 +17,14 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui"
 
-type AdminProductFormProps = {
+type props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode?: 'create' | 'edit';
   id?: string;
 }
 
-export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: AdminProductFormProps) => {
+export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: props) => {
   const queryClient = useQueryClient();
 
   const [imageFile, setImageFile] = useState<File | null>(null); // For image upload handling
