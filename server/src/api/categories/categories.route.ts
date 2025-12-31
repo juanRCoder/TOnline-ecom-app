@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAll, getById, create } from "@server/api/categories/categories.controller";
+import { getAll, getById, create, update } from "@server/api/categories/categories.controller";
 import { param } from "express-validator";
 
 const categoryRouter = Router();
@@ -10,5 +10,6 @@ const validateUUID = (fieldName: string) =>
 categoryRouter.get("/", getAll);
 categoryRouter.get("/:id", validateUUID('category'), getById)
 categoryRouter.post("/", create)
+categoryRouter.patch("/:id", validateUUID('category'), update)
 
 export default categoryRouter;

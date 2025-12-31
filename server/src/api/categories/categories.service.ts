@@ -1,5 +1,5 @@
 import { prisma } from "@server/prisma";
-import { createCategoryDto } from "./categories.dto";
+import { createCategoryDto, UpdateCategoryDto } from "./categories.dto";
 import { errorPrisma } from "@server/middlewares/errorHandler.middleware";
 
 const getAll = () => {
@@ -21,7 +21,7 @@ const getById = async (id: string) => {
   });
 
   if (!category) throw new Error(`Category with ${id} not found`);
-  return category
+  return category;
 };
 
 const create = async (data: createCategoryDto) => {
@@ -43,8 +43,28 @@ const create = async (data: createCategoryDto) => {
   }
 };
 
+const update = async (id: string, data: UpdateCategoryDto) => {
+  try {
+    return await prisma.categories.update({
+      where: { id },
+      data: {
+        name: data.name,
+      },
+    });
+  } catch (error) {
+    if (errorPrisma(error, "P2002")) {
+      throw new Error("The category already exists");
+    }
+    if (errorPrisma(error, "P2025")) {
+      throw new Error(`Category with id ${id} not found`)
+    }
+    throw error;
+  }
+};
+
 export const CategoryServices = {
   getAll,
   getById,
   create,
+  update,
 };

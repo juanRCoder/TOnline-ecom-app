@@ -15,5 +15,5 @@ export const errorHandler = (
 }
 
 export const errorPrisma = (error: unknown, code: string) => {
-  if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === code) return true
+  if (error instanceof Prisma.PrismaClientKnownRequestError) return error.code === code
 }
