@@ -1,6 +1,6 @@
 const API = import.meta.env.VITE_API_DEV;
 
-export const getAllCategories = async () => {
+export const getAll = async () => {
   try {
     const response = await fetch(`${API}/categories`, {
       method: "GET",
@@ -11,10 +11,9 @@ export const getAllCategories = async () => {
 
     const result = await response.json();
     if (!response.ok) throw new Error(result.payload.message);
-    //result.payload.push({ id: '', name: 'Todos' });
     return result;
   } catch (error) {
-    console.error("[getAllCategories]", error);
+    console.error("[getAll]", error);
     throw error;
   }
 };

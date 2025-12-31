@@ -29,7 +29,7 @@ export const AdminProductForm = ({ open, onOpenChange, mode = 'create', id }: Ad
 
   const [imageFile, setImageFile] = useState<File | null>(null); // For image upload handling
   const { data: product } = useProducts.useGetById(id || '');
-  const { data: categories } = useCategories.AllCategories();
+  const { data: categories } = useCategories.useGetAll();
   const { mutate: create } = useProducts.useCreate({
     onSuccess: () => {
       queryClient.invalidateQueries({

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Search, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ShopLayout from '@/layouts/ShopLayout';
@@ -11,6 +11,7 @@ import { useCartStore } from '@/stores/cart.store';
 import type { ProductType } from '@/types/products.type';
 import type { CategoryType } from '@/types/categories.type';
 import { FormInput } from '@/components/FormInput';
+import { capitalize } from '@/lib/utils';
 
 
 const Products = () => {
@@ -23,7 +24,12 @@ const Products = () => {
   const debouncedSearch = useDebounce(searchTerm, 400);
   const { data: allProducts, isLoading: loadingAll, error: errorAll } = useProducts.useGetAll(debouncedSearch)
   const { data: productsByCategory, isLoading: loadingCategory, error: errorCategory } = useProducts.useByCategoryId(categoryId)
-  const { data: allCategories, isLoading: loadingCategories, error: errorCategories } = useCategories.AllCategories()
+  const { data: allCategories, isLoading: loadingCategories, error: errorCategories } = useCategories.useGetAll()
+
+  const categories = useMemo(() => {
+    if (!allCategories) return
+    return [{ id: '', name: 'Todos' }, ...allCategories.payload ]
+  }, [allCategories])
 
   const handleProductsByCategory = (ctg: CategoryType) => {
     setOnCategory(ctg.name)
@@ -76,14 +82,14 @@ const Products = () => {
           {errorCategories && (
             <span className="text-destructive">{errorCategories.message}</span>
           )}
-          {allCategories?.payload.map((ctg: CategoryType) => (
+          {categories?.map((ctg: CategoryType) => (
             <Button
               key={ctg.id}
               variant='outline'
               className='cursor-pointer rounded-md select-none'
               onClick={() => handleProductsByCategory(ctg)}
             >
-              {ctg.name}
+              {capitalize(ctg.name)}
             </Button>
           ))}
         </div>

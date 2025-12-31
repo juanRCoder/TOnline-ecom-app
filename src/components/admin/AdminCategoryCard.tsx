@@ -1,18 +1,24 @@
 import { Edit2, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui"
+import { Button, Card, CardContent } from "@/components/ui"
+import type { CategoryType } from "@/types/categories.type"
+import { capitalize } from "@/lib/utils"
 
-export const AdminCategoryCard = () => {
+type props = {
+  category: CategoryType
+}
+
+export const AdminCategoryCard = ({ category }: props) => {
   return (
-    <div className='bg-card text-primary rounded-md shadow flex items-center justify-between px-5 py-3 outline-1 outline-border'>
-      <p className="font-medium">Bebidas</p>
-      <div className="flex gap-3 my-2">
-        <Button variant='ghost' className="cursor-pointer p-3 rounded-full">
-          <Edit2 />
+    <Card className='flex flex-row items-center justify-between px-4 py-2'>
+      <p className="font-medium">{capitalize(category.name)}</p>
+      <CardContent className="flex px-0">
+        <Button variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
+          <Edit2 className="text-foreground size-5" />
         </Button>
-        <Button variant='ghost' className="cursor-pointer p-3 rounded-full">
-          <Trash2 />
+        <Button variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
+          <Trash2 className="text-destructive size-5" />
         </Button>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -6,11 +6,11 @@ import type { ProductType } from "@/types/products.type"
 import { AdminProductForm } from "./AdminProductForm"
 import { useProducts } from "@/hooks/useProducts"
 
-type AdminProductCardProps = {
+type props = {
   product: ProductType
 }
 
-export const AdminProductCard = ({ product }: AdminProductCardProps) => {
+export const AdminProductCard = ({ product }: props) => {
   const queryClient = useQueryClient();
 
   const [modalForm, setModalForm] = useState<boolean>(false)

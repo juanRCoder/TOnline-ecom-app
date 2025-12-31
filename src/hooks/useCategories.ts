@@ -1,16 +1,13 @@
-import { getAllCategories } from '@/services/categories.service'
+import { getAll } from '@/services/categories.service'
 import { useQuery } from '@tanstack/react-query'
 
-const AllCategories = () => {
+const useGetAll = () => {
   return useQuery({
     queryKey: ['allCategories'],
-    queryFn: () => getAllCategories(),
-    staleTime: 1000 * 60 * 5,
-    retry: 1,
-    refetchOnWindowFocus: false
+    queryFn: () => getAll(),
   }) 
 }
 
 export const useCategories = {
-  AllCategories
+  useGetAll
 }

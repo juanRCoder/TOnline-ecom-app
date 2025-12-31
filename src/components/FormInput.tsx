@@ -1,5 +1,6 @@
 import React from "react";
 import { Input, Field, FieldLabel } from "@/components/ui";
+import { FieldError } from "./ui/field";
 
 type FormInputProps = {
   id: string;
@@ -21,7 +22,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
           ref={ref}
           {...props}
         />
-        {error && <p className="text-sm text-destructive">{error}</p>}
+        {error && <FieldError className="text-sm text-destructive">{error}</FieldError>}
       </Field>
     )
   }
