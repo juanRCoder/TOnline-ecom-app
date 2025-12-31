@@ -44,19 +44,33 @@ const create = async (data: createCategoryDto) => {
 };
 
 const update = async (id: string, data: UpdateCategoryDto) => {
+  let name: string | undefined;
+  if (data.name) name = data.name.toLowerCase().trim().replace(/\s+/g, "");
+
   try {
     return await prisma.categories.update({
       where: { id },
-      data: {
-        name: data.name,
-      },
+      data: { name },
     });
   } catch (error) {
     if (errorPrisma(error, "P2002")) {
       throw new Error("The category already exists");
     }
     if (errorPrisma(error, "P2025")) {
-      throw new Error(`Category with id ${id} not found`)
+      throw new Error(`Category with id ${id} not found`);
+    }
+    throw error;
+  }
+};
+
+const remove = async (id: string) => {
+  try {
+    return await prisma.categories.delete({
+      where: { id },
+    });
+  } catch (error) {
+    if (errorPrisma(error, "P2025")) {
+      throw new Error(`Category with id ${id} not found`);
     }
     throw error;
   }
@@ -67,4 +81,5 @@ export const CategoryServices = {
   getById,
   create,
   update,
+  remove,
 };

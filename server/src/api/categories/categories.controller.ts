@@ -18,6 +18,8 @@ export const getById = async (req: Request, res: Response) => {
 export const create = async (req: Request, res: Response) => {
   const data = req.body;
 
+  if (!data.name) throw new Error("name is required")
+
   await CategoryServices.create(data);
   return res.status(HttpStatus.CREATED).json(apiResponse(true, { ok: true }));
 };
@@ -26,8 +28,13 @@ export const update = async (req: Request, res: Response) => {
   const { id } = req.params;
   const data = req.body;
 
-  if (!data.name) throw new Error("name is required")
-
   await CategoryServices.update(id, data)
+  return res.status(HttpStatus.OK).json(apiResponse(true, { ok: true }));
+}
+
+export const remove = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  await CategoryServices.remove(id)
   return res.status(HttpStatus.OK).json(apiResponse(true, { ok: true }));
 }
