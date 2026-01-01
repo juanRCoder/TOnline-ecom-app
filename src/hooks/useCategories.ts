@@ -1,4 +1,4 @@
-import { create, getAll, getById, update } from "@/services/categories.service";
+import { create, getAll, getById, remove, update } from "@/services/categories.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useGetAll = () => {
@@ -45,9 +45,22 @@ const useUpdate = ({ onSuccess, onError }: UseMutationProps) => {
   });
 };
 
+const useRemove = ({ onSuccess, onError }: UseMutationProps) => {
+  return useMutation({
+    mutationFn: remove,
+    onSuccess(data) {
+      if (onSuccess) onSuccess(data);
+    },
+    onError(error) {
+      if (onError) onError(String(error));
+    },
+  });
+};
+
 export const useCategories = {
   useGetAll,
   useGetById,
   useCreate,
   useUpdate,
+  useRemove
 };

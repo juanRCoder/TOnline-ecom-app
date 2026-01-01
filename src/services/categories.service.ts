@@ -42,6 +42,9 @@ export const create = async (data: CategoryType) => {
   try {
     const response = await fetch(`${API}/categories`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
 
@@ -75,6 +78,21 @@ export const update = async ({
     return result;
   } catch (error) {
     console.error("[service update]", error);
+    throw error;
+  }
+};
+
+export const remove = async (id: string) => {
+  try {
+    const response = await fetch(`${API}/categories/${id}`, {
+      method: "DELETE",
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
+  } catch (error) {
+    console.error("[service remove]", error);
     throw error;
   }
 };

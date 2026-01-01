@@ -67,9 +67,10 @@ export const AdminCategoryForm = ({ open, onOpenChange, mode = 'create', id }: p
   }, [open, category, reset, mode])
 
   useEffect(() => {
-    console.log(category)
-  }, [category])
-  
+    if (!open) {
+      reset(defaultCategoryForm);
+    };
+  }, [open, reset]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

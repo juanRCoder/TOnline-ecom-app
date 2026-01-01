@@ -1,16 +1,31 @@
+import { useState } from "react"
 import { Edit2, Trash2 } from "lucide-react"
+import { useQueryClient } from "@tanstack/react-query"
 import { Button, Card, CardContent } from "@/components/ui"
 import type { CategoryType } from "@/types/categories.type"
 import { AdminCategoryForm } from "./AdminCategoryForm"
-import { useState } from "react"
+import { useCategories } from "@/hooks/useCategories"
 
 type props = {
   category: CategoryType
 }
 
 export const AdminCategoryCard = ({ category }: props) => {
+  const queryClient = useQueryClient();
+
   const [modalForm, setModalForm] = useState<boolean>(false)
   
+  const { mutate: remove } = useCategories.useRemove({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["allCategories"],
+        });
+      },
+      onError: (message) => {
+        console.error("Error deleted product:", message);
+      },
+    })
+
   return (
     <Card className='flex flex-row items-center justify-between px-4 py-2'>
       <p className="font-medium">{category.name}</p>
@@ -18,7 +33,7 @@ export const AdminCategoryCard = ({ category }: props) => {
         <Button onClick={() => setModalForm(true)} variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
           <Edit2 className="text-foreground size-5" />
         </Button>
-        <Button variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
+        <Button onClick={() => remove(category.id || '')} variant='ghost' className="h-16 w-16 cursor-pointer rounded-full">
           <Trash2 className="text-destructive size-5" />
         </Button>
       </CardContent>
