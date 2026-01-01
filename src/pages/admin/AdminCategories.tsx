@@ -5,10 +5,14 @@ import { AdminCategoryCard } from "@/components/admin/AdminCategoryCard"
 import { Button } from "@/components/ui"
 import { useCategories } from "@/hooks/useCategories"
 import type { CategoryType } from "@/types/categories.type"
+import { AdminCategoryForm } from "@/components/admin/AdminCategoryForm"
+import { useState } from "react"
 
 
 const AdminCategories = () => {
   const navigate = useNavigate()
+  const [modalForm, setModalForm] = useState<boolean>(false)
+
   const { data: allCategories } = useCategories.useGetAll()
 
   return (
@@ -25,10 +29,11 @@ const AdminCategories = () => {
         ))}
       </div>
       <div className="sticky bottom-6 px-6 flex justify-end">
-        <Button className="rounded-full h-16 w-16 cursor-pointer bg-primary">
+        <Button onClick={() => setModalForm(true)} className="rounded-full h-16 w-16 cursor-pointer bg-primary">
           <Plus className="size-8" />
         </Button>
       </div>
+      <AdminCategoryForm open={modalForm} onOpenChange={setModalForm} />
     </AdminLayout>
   )
 }

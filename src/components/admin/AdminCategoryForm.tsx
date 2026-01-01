@@ -11,11 +11,11 @@ import { Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogFo
 type props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  // mode?: 'create' | 'edit';
+  mode?: 'create' | 'edit';
   id?: string;
 }
 
-export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
+export const AdminCategoryForm = ({ open, onOpenChange, mode = 'create', id }: props) => {
   // hooks
   const queryClient = useQueryClient();
   const { data: category } = useCategories.useGetById(id || '');
@@ -27,6 +27,17 @@ export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
   } = useForm<TypeCategoryForm>({
     resolver: zodResolver(schemaCategoryForm),
     defaultValues: defaultCategoryForm
+  })
+  const { mutate: create } = useCategories.useCreate({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["allCategories"],
+      });
+      onOpenChange(false);
+    },
+    onError: (message) => {
+      console.error("Error creating product:", message);
+    },
   })
   const { mutate: update } = useCategories.useUpdate({
     onSuccess: () => {
@@ -41,17 +52,24 @@ export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
 
   // methods
   const onSubmit = (data: TypeCategoryForm) => {
-    update({ data, id: id || '' })
+    if (mode === 'edit' && id) update({ data, id });
+    else create(data)
   }
 
   // lyfecicle
   useEffect(() => {
     if (!open) return
+    if (mode !== 'edit') return
     if (!category) return
     reset({
       name: category.payload.name
     })
-  }, [open, category, reset])
+  }, [open, category, reset, mode])
+
+  useEffect(() => {
+    console.log(category)
+  }, [category])
+  
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -82,7 +100,7 @@ export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
                   </Button>
                 </DialogClose>
                 <Button type='submit' className="cursor-pointer">
-                  Actualizar Categoria
+                  {mode === 'create' ? 'Crear' : 'Actualizar'} Categoria
                 </Button>
               </DialogFooter>
             </form>

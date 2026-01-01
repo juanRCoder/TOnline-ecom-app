@@ -38,6 +38,22 @@ export const getById = async (id: string) => {
   }
 };
 
+export const create = async (data: CategoryType) => {
+  try {
+    const response = await fetch(`${API}/categories`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
+  } catch (error) {
+    console.error("[service create]", error);
+    throw error;
+  }
+};
+
 export const update = async ({
   data,
   id,
