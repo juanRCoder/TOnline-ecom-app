@@ -17,3 +17,7 @@ export const defaultProductForm = {
   imagePublicId: null,
   categoryId: ""
 };
+
+export const defaultCategoryForm = {
+  name: ""
+}

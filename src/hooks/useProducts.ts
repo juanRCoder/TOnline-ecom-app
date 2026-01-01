@@ -22,7 +22,7 @@ const useGetAll = (searchTerm?: string, isAdmin: boolean = false) => {
 
 const useByCategoryId = (id: string) => {
   return useQuery({
-    queryKey: ["getByCategoryId", id],
+    queryKey: ["getProductByCategoryId", id],
     queryFn: () => getByCategoryId(id),
     enabled: !!id,
     staleTime: 1000 * 60 * 5,
@@ -33,7 +33,7 @@ const useByCategoryId = (id: string) => {
 
 const useGetById = (id: string) => {
   return useQuery({
-    queryKey: ["getById", id],
+    queryKey: ["getProductById", id],
     queryFn: () => getById(id),
     enabled: !!id,
     retry: 1,

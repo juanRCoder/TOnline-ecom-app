@@ -1,7 +1,12 @@
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCategories } from "@/hooks/useCategories";
-import { Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, ScrollArea } from "@/components/ui";
 import { FormInput } from "../FormInput";
+import { schemaCategoryForm, type TypeCategoryForm } from "@/schemas/category.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { defaultCategoryForm } from "@/lib/default";
+import { Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, ScrollArea } from "@/components/ui";
 
 type props = {
   open: boolean;
@@ -11,12 +16,42 @@ type props = {
 }
 
 export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
+  // hooks
+  const queryClient = useQueryClient();
   const { data: category } = useCategories.useGetById(id || '');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<TypeCategoryForm>({
+    resolver: zodResolver(schemaCategoryForm),
+    defaultValues: defaultCategoryForm
+  })
+  const { mutate: update } = useCategories.useUpdate({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allCategories"] });
+      queryClient.invalidateQueries({ queryKey: ["getCategoryById", id] });
+      onOpenChange(false)
+    },
+    onError: (message) => {
+      console.error("Error updating product:", message);
+    }
+  })
 
+  // methods
+  const onSubmit = (data: TypeCategoryForm) => {
+    update({ data, id: id || '' })
+  }
+
+  // lyfecicle
   useEffect(() => {
     if (!open) return
-    console.log(category)
-  }, [open, category])
+    if (!category) return
+    reset({
+      name: category.payload.name
+    })
+  }, [open, category, reset])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -29,13 +64,14 @@ export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
             Editar Categoria
           </DialogTitle>
           <ScrollArea className='flex max-h-full flex-col overflow-hidden'>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <DialogDescription asChild>
                 <div className="p-6">
                   <FormInput
                     id="name"
                     label="Nombre"
-                    defaultValue={category?.payload?.name}
+                    {...register("name")}
+                    error={errors.name?.message}
                   />
                 </div>
               </DialogDescription>
@@ -46,7 +82,7 @@ export const AdminCategoryForm = ({ open, onOpenChange, id }: props) => {
                   </Button>
                 </DialogClose>
                 <Button type='submit' className="cursor-pointer">
-                  Actualizar Producto
+                  Actualizar Categoria
                 </Button>
               </DialogFooter>
             </form>
