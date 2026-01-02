@@ -12,14 +12,8 @@ const getAll = async () => {
     select: {
       id: true,
       guestUserName: true,
-      guestUserPhone: true,
-      typeOfDelivery: true,
-      guestUserAddress: true,
-      typeOfPayment: true,
-      imageVoucher: true,
-      notes: true,
-      total: true,
       status: true,
+      OrderProducts: { select: { price: true } },
     },
   });
 };
