@@ -83,6 +83,10 @@ const Checkout = () => {
       }
       formData.append(key, value)
     }
+    // for (const [key, value] of formData.entries()) {
+    //   if (key == 'products') console.log(key, JSON.parse(value))
+    //   console.log(key, value)
+    // }
     createOrder(formData)
   }
 

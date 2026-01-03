@@ -19,9 +19,6 @@ export type OrderType = {
   id: string;
   guestUserName: string;
   status: string;
-  OrderProducts: OrderProducts[];
+  total: number;
 };
 
-type OrderProducts = {
-  price: number;
-};

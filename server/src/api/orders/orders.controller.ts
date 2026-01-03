@@ -24,13 +24,10 @@ export const create = async (
     );
   }
 
-  const parsedProducts =
-    typeof products === "string" ? JSON.parse(products) : products;
-
   try {
     const createdOrder = await OrderServices.create(
       orderData,
-      parsedProducts,
+      JSON.parse(products),
       imageVoucher
     );
     return res.status(HttpStatus.OK).json(apiResponse(true, createdOrder));

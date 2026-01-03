@@ -15,12 +15,12 @@ export const AdminOrderCard = ({ order }: props) => {
     <div className='bg-card text-primary rounded-md shadow flex flex-col items-center justify-between px-5 py-3 gap-2 outline-1 outline-border'>
       <div className="w-full flex justify-between">
         <div>
-          <p className="text-lg font-semibold pb-2">Orden #{`${order.id.slice(-6)}`}</p>
+          <p className="text-lg font-semibold pb-2">Orden #{`${order.id.slice(-6).toUpperCase()}`}</p>
           <p>{order.guestUserName}</p>
         </div>
         <div className="flex flex-col gap-0.5">
           <p className="text-right text-lg font-semibold">
-            S/ {order.OrderProducts[0]?.price.toFixed(2)}
+            S/ {order.total.toFixed(2)}
           </p>
           <span className="bg-muted text-primary outline-chart-4 py-2 px-4 rounded-2xl">
             {handleOrderStatus(order.status)}

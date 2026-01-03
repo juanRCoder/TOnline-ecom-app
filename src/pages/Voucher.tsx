@@ -75,7 +75,7 @@ const Voucher = () => {
             </CardContent>
             <CardFooter>
               <div className="text-center w-full">
-                <p>Pedido #{voucher?.id.slice(-6) || '123ASD'}</p>
+                <p>Pedido #{voucher?.id.slice(-6).toUpperCase() || '123ASD'}</p>
                 <p className="text-sm text-primary">!Gracias por tu compra!</p>
               </div>
             </CardFooter>

@@ -10,7 +10,10 @@ const Cart = () => {
   const navigate = useNavigate()
   const { items } = useCartStore()
 
-  const totalProductInCart = items.reduce((acc, p) => (acc + p.price) * p.quantity, 0);
+  const totalProducts = (items ?? []).reduce((acc, item) => {
+    return acc + item.price * item.quantity
+  }, 0)
+
   return (
     <ShopLayout>
       <div className='bg-background text-foreground flex items-center p-4 border-b'>
@@ -31,14 +34,14 @@ const Cart = () => {
       <div>
         <div className="flex justify-between pb-6 px-3 border-t-2 pt-2 font-semibold">
           <p>Total:</p>
-          <p>S/ {totalProductInCart.toFixed(2)}</p>
+          <p>S/ {totalProducts.toFixed(2)}</p>
         </div>
         <div className="px-3 my-4">
           <Button
             onClick={() => navigate('/checkout')}
             disabled={items.length === 0}
             className={`w-full py-5
-              ${items.length > 0 ? 'cursor-pointer' : 'bg-primary/50 select-none' }
+              ${items.length > 0 ? 'cursor-pointer' : 'bg-primary/50 select-none'}
             `}
           >
             Pagar

@@ -8,14 +8,21 @@ import { uploadImageToCloudinary } from "@server/services/cloudinary";
 dotenv.config();
 
 const getAll = async () => {
-  return await prisma.orders.findMany({
+  const orders = await prisma.orders.findMany({
     select: {
       id: true,
       guestUserName: true,
       status: true,
-      OrderProducts: { select: { price: true } },
+      OrderProducts: { select: { subtotal: true } },
     },
   });
+
+  return orders.map((or) => ({
+    id: or.id,
+    guestUserName: or.guestUserName,
+    status: or.status,
+    total: or.OrderProducts.reduce((acc, op) => acc + op.subtotal, 0),
+  }));
 };
 
 const create = async (
