@@ -26,10 +26,7 @@ const AdminOrders = () => {
           Pendientes
         </Button>
         <Button variant='ghost' className="flex-1 cursor-pointer py-2">
-          Completadas
-        </Button>
-        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
-          Rechazadas
+          Entregadas
         </Button>
       </div>
       {/* CONTENT */}
