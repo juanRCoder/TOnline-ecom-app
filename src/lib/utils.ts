@@ -1,10 +1,19 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const handleOrderStatus = (status: string) => {
+  if (status === "pending") return "pendiente";
+  if (status === "delivered") return "entregado";
+}
+
+export const handleTypeOfPayment = (payment: string) => {
+  if (payment === "cash") return "efectivo"
 }

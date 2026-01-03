@@ -1,19 +1,21 @@
 import { Button } from "@/components/ui/button"
 import type { OrderType } from "@/types/orders.type"
+import { useState } from "react"
+import { Card, CardContent, CardFooter } from "../ui/card"
+import { AdminOrderDetails } from "./AdminOrderDetails"
+import { handleOrderStatus } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 type props = {
   order: OrderType
 }
 
 export const AdminOrderCard = ({ order }: props) => {
-  const handleOrderStatus = (status: string) => {
-    if (status === 'pending') return 'pendiente'
-    if (status === 'delivered') return 'entregado'
-  }
+  const [modalDetails, setModalDetails] = useState<boolean>(false)
 
   return (
-    <div className='bg-card text-primary rounded-md shadow flex flex-col items-center justify-between px-5 py-3 gap-2 outline-1 outline-border'>
-      <div className="w-full flex justify-between">
+    <Card>
+      <CardContent className="flex justify-between">
         <div>
           <p className="text-lg font-semibold pb-2">Orden #{`${order.id.slice(-6).toUpperCase()}`}</p>
           <p>{order.guestUserName}</p>
@@ -22,20 +24,20 @@ export const AdminOrderCard = ({ order }: props) => {
           <p className="text-right text-lg font-semibold">
             S/ {order.total.toFixed(2)}
           </p>
-          <span className="bg-muted text-primary outline-chart-4 py-2 px-4 rounded-2xl">
+          <Badge className="text-md">
             {handleOrderStatus(order.status)}
-          </span>
+          </Badge>
         </div>
-      </div>
-      <div className="w-full flex justify-between flex-wrap gap-5 mt-4">
-        <Button variant='outline' className="flex-1 py-4 cursor-pointer">
+      </CardContent>
+      <CardFooter className="gap-5">
+        <Button onClick={() => setModalDetails(true)} variant='outline' className="flex-1 py-4 cursor-pointer">
           Ver Resumen
         </Button>
         <Button variant='default' className="flex-1 py-4 cursor-pointer">
           Confirmar Entrega
         </Button>
-      </div>
-
-    </div >
+      </CardFooter>
+      <AdminOrderDetails open={modalDetails} onOpenChange={setModalDetails} id={order.id} />
+    </Card >
   )
 }

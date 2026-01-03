@@ -23,12 +23,14 @@ export type OrderType = {
   typeOfPayment?: string;
   status: string;
   total: number;
-  OrderProducts?: {
-    quantity: number;
-    price: number;
-    Products: {
-      name: string;
-      imageUrl: string
-    }
+  OrderProducts?: OrderProducts[];
+};
+
+export type OrderProducts = {
+  quantity: number;
+  price: number;
+  Products: {
+    name: string;
+    imageUrl: string;
   };
 };

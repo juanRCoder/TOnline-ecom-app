@@ -1,4 +1,10 @@
-import { create, getAll, getById, remove, update } from "@/services/categories.service";
+import {
+  create,
+  getAll,
+  getById,
+  remove,
+  update,
+} from "@/services/categories.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useGetAll = () => {
@@ -62,5 +68,5 @@ export const useCategories = {
   useGetById,
   useCreate,
   useUpdate,
-  useRemove
+  useRemove,
 };

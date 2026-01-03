@@ -1,4 +1,4 @@
-import { createOrder, getAll } from "@/services/orders.service";
+import { createOrder, getAll, getById } from "@/services/orders.service";
 import type { VoucherType } from "@/types/orders.type";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -6,6 +6,14 @@ const useGetAll = () => {
   return useQuery({
     queryKey: ["allOrders"],
     queryFn: getAll,
+  });
+};
+
+const useGetById = (id: string) => {
+  return useQuery({
+    queryKey: ["getOrderById", id],
+    queryFn: () => getById(id),
+    enabled: !!id,
   });
 };
 
@@ -29,5 +37,6 @@ export const useCreateOrder = ({ onSuccess, onError }: UseCreateOrderProps) => {
 
 export const useOrders = {
   useGetAll,
+  useGetById,
   useCreateOrder,
 };

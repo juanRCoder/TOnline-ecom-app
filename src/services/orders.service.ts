@@ -18,6 +18,24 @@ export const getAll = async () => {
   }
 };
 
+export const getById = async (id: string) => {
+  try {
+    const response = await fetch(`${API}/orders/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
+  } catch (error) {
+    console.error("[service getById]", error);
+    throw error;
+  }
+};
+
 export const createOrder = async (orderData: FormData) => {
   try {
     const response = await fetch(`${API}/orders`, {
