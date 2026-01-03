@@ -8,6 +8,13 @@ export const getAll = async (_req: Request, res: Response) => {
   return res.status(HttpStatus.OK).json(apiResponse(true, orders));
 };
 
+export const getById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const order = await OrderServices.getById(id)
+  return res.status(HttpStatus.OK).json(apiResponse(true, order));
+}
+
 export const create = async (
   req: Request,
   res: Response,

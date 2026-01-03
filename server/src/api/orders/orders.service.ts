@@ -7,22 +7,44 @@ import { uploadImageToCloudinary } from "@server/services/cloudinary";
 
 dotenv.config();
 
-const getAll = async () => {
-  const orders = await prisma.orders.findMany({
+const getAll = () => {
+  return  prisma.orders.findMany({
     select: {
       id: true,
       guestUserName: true,
       status: true,
-      OrderProducts: { select: { subtotal: true } },
+      total: true
+    },
+  });
+};
+
+const getById = async (id: string) => {
+  const order = await prisma.orders.findUnique({
+    where: { id },
+    select: {
+      guestUserName: true,
+      guestUserPhone: true,
+      typeOfDelivery: true,
+      typeOfPayment: true,
+      total: true,
+      status: true,
+      OrderProducts: {
+        select: {
+          quantity: true,
+          price: true,
+          Products: {
+            select: {
+              name: true,
+              imageUrl: true
+            }
+          }
+        }
+      }
     },
   });
 
-  return orders.map((or) => ({
-    id: or.id,
-    guestUserName: or.guestUserName,
-    status: or.status,
-    total: or.OrderProducts.reduce((acc, op) => acc + op.subtotal, 0),
-  }));
+  if (!order) throw new Error(`Order with ${id} not found`);
+  return order;
 };
 
 const create = async (
@@ -87,5 +109,6 @@ const create = async (
 
 export const OrderServices = {
   getAll,
+  getById,
   create,
 };

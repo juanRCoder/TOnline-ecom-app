@@ -18,7 +18,17 @@ type Products = {
 export type OrderType = {
   id: string;
   guestUserName: string;
+  guestUserPhone?: string;
+  typeOfDelivery?: string;
+  typeOfPayment?: string;
   status: string;
   total: number;
+  OrderProducts?: {
+    quantity: number;
+    price: number;
+    Products: {
+      name: string;
+      imageUrl: string
+    }
+  };
 };
-
