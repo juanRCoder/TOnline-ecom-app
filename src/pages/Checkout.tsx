@@ -6,7 +6,7 @@ import ShopLayout from "@/layouts/ShopLayout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/FormInput";
 import { FormInputRadio } from "@/components/FormInputRadio";
-import { useCreateOrder } from "@/hooks/useOrders";
+import { useOrders } from "@/hooks/useOrders";
 import { schemaCheckoutForm, type TypeCheckoutForm, type TypeCheckout } from "@/schemas/checkout.schema";
 import { useCartStore } from "@/stores/cart.store";
 import { useVoucherStore } from "@/stores/voucher.store";
@@ -34,7 +34,7 @@ const Checkout = () => {
   const typeOfDeliveryValue = watch("typeOfDelivery");
   const typeOfPaymentValue = watch("typeOfPayment")
 
-  const { mutate: createOrder, isPending: isCreatingOrder } = useCreateOrder({
+  const { mutate: createOrder, isPending: isCreatingOrder } = useOrders.useCreateOrder({
     onSuccess(data) {
       clearCart()
       setVoucher(data.payload)

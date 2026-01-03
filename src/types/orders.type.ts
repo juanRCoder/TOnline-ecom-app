@@ -1,16 +1,27 @@
 export type VoucherType = {
   id: string;
   createdAt: string;
-  products: OrderProducts[];
+  products: Products[];
   subtotal: number;
   deliveryCost: number;
   total: number;
-  guestUserName: string
+  guestUserName: string;
   typeOfDelivery: "local" | "delivery";
 };
 
-type OrderProducts = {
+type Products = {
   name: string;
   quantity: number;
   subtotal: number;
+};
+
+export type OrderType = {
+  id: string;
+  guestUserName: string;
+  status: string;
+  OrderProducts: OrderProducts[];
+};
+
+type OrderProducts = {
+  price: number;
 };

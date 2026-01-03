@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminOrderCard } from "@/components/admin/AdminOrderCard"
 import { Button } from "@/components/ui"
+import { useOrders } from "@/hooks/useOrders"
+import type { OrderType } from "@/types/orders.type"
 
 const AdminOrders = () => {
   const navigate = useNavigate()
+
+  const { data: allOrders } = useOrders.useGetAll()
 
   return (
     <AdminLayout>
@@ -30,9 +34,9 @@ const AdminOrders = () => {
       </div>
       {/* CONTENT */}
       <div className="flex flex-col px-3 gap-5 py-10">
-        <AdminOrderCard />
-        <AdminOrderCard />
-        <AdminOrderCard />
+        {allOrders?.payload.map((ord: OrderType) => (
+          <AdminOrderCard key={ord.id} order={ord} />
+        ))}
       </div>
     </AdminLayout>
   )
