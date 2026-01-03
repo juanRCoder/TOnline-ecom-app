@@ -1,4 +1,4 @@
-import type { CategoryType } from "@/types/categories.type";
+import type { TypeCategoryForm } from "@/schemas/category.schema";
 
 const API = import.meta.env.VITE_API_DEV;
 
@@ -38,7 +38,7 @@ export const getById = async (id: string) => {
   }
 };
 
-export const create = async (data: CategoryType) => {
+export const create = async (data: TypeCategoryForm) => {
   try {
     const response = await fetch(`${API}/categories`, {
       method: "POST",
@@ -61,7 +61,7 @@ export const update = async ({
   data,
   id,
 }: {
-  data: Partial<CategoryType>;
+  data: Partial<TypeCategoryForm>;
   id: string;
 }) => {
   try {

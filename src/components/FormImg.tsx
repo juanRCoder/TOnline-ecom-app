@@ -1,6 +1,6 @@
 import { Package } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
-import { Button } from './ui';
+import { Button } from '@/components/ui/button';
 
 interface ImageUploadProps {
   alt: string

@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui"
+import { Button } from "@/components/ui/button"
 import type { OrderType } from "@/types/orders.type"
 
 type props = {
@@ -7,8 +6,6 @@ type props = {
 }
 
 export const AdminOrderCard = ({ order }: props) => {
-  const [modal, setModal] = useState<boolean>(false)
-
   const handleOrderStatus = (status: string) => {
     if (status === 'pending') return 'pendiente'
     if (status === 'delivered') return 'entregado'
@@ -34,24 +31,11 @@ export const AdminOrderCard = ({ order }: props) => {
         <Button variant='outline' className="flex-1 py-4 cursor-pointer">
           Ver Resumen
         </Button>
-        <Button onClick={() => (setModal(true))} variant='default' className="flex-1 py-4 cursor-pointer">
+        <Button variant='default' className="flex-1 py-4 cursor-pointer">
           Confirmar Entrega
         </Button>
       </div>
-      <Dialog open={modal} onOpenChange={setModal}>
-        <DialogTitle />
-        <DialogContent className='m-0' showCloseButton={false}>
-          <p>
-            Desea confirmar la orden #123455 como entregado solicitado por Juan Ramirez?
-          </p>
-          <div className='w-full flex gap-4 flex-wrap'>
-            <DialogClose asChild>
-              <Button className='flex-1'>Cancelar</Button>
-            </DialogClose>
-            <Button className='flex-1'>Confirmar</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+
     </div >
   )
 }

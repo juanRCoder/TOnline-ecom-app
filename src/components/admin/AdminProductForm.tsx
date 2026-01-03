@@ -9,13 +9,11 @@ import { useCategories } from "@/hooks/useCategories";
 import { schemaProductForm, type TypeProductForm } from "@/schemas/product.schema.";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { defaultProductForm } from "@/lib/default";
-import {
-  Button,
-  DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Dialog,
-  Field, FieldLabel,
-  ScrollArea,
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
-} from "@/components/ui"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 type props = {
   open: boolean;

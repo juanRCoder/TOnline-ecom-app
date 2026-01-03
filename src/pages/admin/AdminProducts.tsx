@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminProductCard } from "@/components/admin/AdminProductCard"
 import { AdminProductForm } from "@/components/admin/AdminProductForm"
-import { Button } from "@/components/ui"
+import { Button } from "@/components/ui/button"
 import { useProducts } from "@/hooks/useProducts"
 import type { ProductType } from "@/types/products.type"
 

@@ -6,7 +6,9 @@ import { FormInput } from "../FormInput";
 import { schemaCategoryForm, type TypeCategoryForm } from "@/schemas/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { defaultCategoryForm } from "@/lib/default";
-import { Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, ScrollArea } from "@/components/ui";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 type props = {
   open: boolean;

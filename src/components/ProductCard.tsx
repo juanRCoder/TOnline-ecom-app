@@ -1,6 +1,7 @@
 import { useCartStore } from "@/stores/cart.store";
 import type { ProductType } from "@/types/products.type";
-import { Card, CardContent, Button } from "@/components/ui";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"
 
 type ProductCardProps = {
   product: ProductType

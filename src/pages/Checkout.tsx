@@ -11,7 +11,9 @@ import { schemaCheckoutForm, type TypeCheckoutForm, type TypeCheckout } from "@/
 import { useCartStore } from "@/stores/cart.store";
 import { useVoucherStore } from "@/stores/voucher.store";
 import { defaultCheckoutForm } from "@/lib/default";
-import { Label, Input, Button } from "@/components/ui";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Checkout = () => {
   const [hasItems, setHasItem] = useState<boolean>(false)

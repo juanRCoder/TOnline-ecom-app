@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { Edit2, Trash2 } from "lucide-react"
 import { useQueryClient } from "@tanstack/react-query"
-import { Button, Card, CardContent } from "@/components/ui"
 import type { CategoryType } from "@/types/categories.type"
 import { AdminCategoryForm } from "./AdminCategoryForm"
 import { useCategories } from "@/hooks/useCategories"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 type props = {
   category: CategoryType

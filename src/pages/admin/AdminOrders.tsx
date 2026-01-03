@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { AdminLayout } from "@/layouts/AdminLayout"
 import { AdminOrderCard } from "@/components/admin/AdminOrderCard"
-import { Button } from "@/components/ui"
+import { Button } from "@/components/ui/button"
 import { useOrders } from "@/hooks/useOrders"
 import type { OrderType } from "@/types/orders.type"
 

@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Edit2, Trash2 } from "lucide-react"
-import { Button, Card, CardContent } from "@/components/ui"
 import type { ProductType } from "@/types/products.type"
 import { AdminProductForm } from "./AdminProductForm"
 import { useProducts } from "@/hooks/useProducts"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 type props = {
   product: ProductType
