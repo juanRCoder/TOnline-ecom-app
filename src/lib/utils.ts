@@ -16,4 +16,10 @@ export const handleOrderStatus = (status: string) => {
 
 export const handleTypeOfPayment = (payment: string) => {
   if (payment === "cash") return "efectivo"
+  if (payment === "bank") return "bancario"
+}
+
+export const handleTypeOfDelivery = (delivery: string) => {
+  if (delivery === "delivery") return "A domicilio"
+  if (delivery === "local") return "En tienda"
 }

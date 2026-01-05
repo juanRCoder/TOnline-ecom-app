@@ -123,7 +123,7 @@ const Checkout = () => {
             <FormInputRadio
               {...register("typeOfDelivery")}
               value="local"
-              label="Recogida local"
+              label="En tienda"
               checked={typeOfDeliveryValue === "local"}
               onChange={() => {
                 setValue("typeOfDelivery", "local");
