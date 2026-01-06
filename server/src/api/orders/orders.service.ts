@@ -4,16 +4,17 @@ import { UploadApiResponse } from "cloudinary";
 import { orderedProductDto, createOrderDto } from "./orders.dto";
 import { formatVoucherDate } from "@server/utils/date.utils";
 import { uploadImageToCloudinary } from "@server/services/cloudinary";
+import { errorPrisma } from "@server/middlewares/errorHandler.middleware";
 
 dotenv.config();
 
 const getAll = () => {
-  return  prisma.orders.findMany({
+  return prisma.orders.findMany({
     select: {
       id: true,
       guestUserName: true,
       status: true,
-      total: true
+      total: true,
     },
   });
 };
@@ -35,11 +36,11 @@ const getById = async (id: string) => {
           Products: {
             select: {
               name: true,
-              imageUrl: true
-            }
-          }
-        }
-      }
+              imageUrl: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -107,8 +108,23 @@ const create = async (
   };
 };
 
+const confirmDeliveryById = async (id: string) => {
+  try {
+    await prisma.orders.update({
+      where: { id },
+      data: { status: "delivered" },
+    });
+  } catch (error) {
+    if (errorPrisma(error, "P2025")) {
+      throw new Error(`Category with id ${id} not found`);
+    }
+    throw error;
+  }
+};
+
 export const OrderServices = {
   getAll,
   getById,
   create,
+  confirmDeliveryById,
 };
