@@ -36,7 +36,7 @@ export const getById = async (id: string) => {
   }
 };
 
-export const createOrder = async (orderData: FormData) => {
+export const create = async (orderData: FormData) => {
   try {
     const response = await fetch(`${API}/orders`, {
       method: "POST",
@@ -47,7 +47,22 @@ export const createOrder = async (orderData: FormData) => {
     if (!response.ok) throw new Error(result.payload.message);
     return result;
   } catch (error) {
-    console.error("[createOrder]", error);
+    console.error("[service create]", error);
+    throw error;
+  }
+};
+
+export const confirmDelivery = async (id: string) => {
+  try {
+    const response = await fetch(`${API}/orders/confirm-delivery/${id}`, {
+      method: "PATCH",
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.payload.message);
+    return result;
+  } catch (error) {
+    console.error("[service create]", error);
     throw error;
   }
 };

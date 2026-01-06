@@ -1,17 +1,29 @@
-import { Button } from "@/components/ui/button"
-import type { OrderType } from "@/types/orders.type"
 import { useState } from "react"
-import { Card, CardContent, CardFooter } from "../ui/card"
+import { useQueryClient } from "@tanstack/react-query"
+import type { OrderType } from "@/types/orders.type"
 import { AdminOrderDetails } from "./AdminOrderDetails"
+import { useOrders } from "@/hooks/useOrders"
 import { handleOrderStatus } from "@/lib/utils"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 type props = {
   order: OrderType
 }
 
 export const AdminOrderCard = ({ order }: props) => {
+  const queryClient = useQueryClient();
   const [modalDetails, setModalDetails] = useState<boolean>(false)
+
+  const { mutate: confirmOrder, isPending } = useOrders.useConfirmDelivery({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allOrders"] });
+    },
+    onError: (message) => {
+      console.error("Error updating product:", message);
+    }
+  });
 
   return (
     <Card>
@@ -33,8 +45,13 @@ export const AdminOrderCard = ({ order }: props) => {
         <Button onClick={() => setModalDetails(true)} variant='outline' className="flex-1 py-4 cursor-pointer">
           Ver Resumen
         </Button>
-        <Button variant='default' className="flex-1 py-4 cursor-pointer">
-          Confirmar Entrega
+        <Button
+          className="flex-1 py-4 cursor-pointer"
+          onClick={() => confirmOrder(order.id)}
+
+          disabled={isPending || order.status === 'delivered'}
+        >
+          {isPending ? "Confirmando..." : "Confirmar Entrega"}
         </Button>
       </CardFooter>
       <AdminOrderDetails open={modalDetails} onOpenChange={setModalDetails} id={order.id} />

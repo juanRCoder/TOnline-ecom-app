@@ -36,7 +36,7 @@ const Checkout = () => {
   const typeOfDeliveryValue = watch("typeOfDelivery");
   const typeOfPaymentValue = watch("typeOfPayment")
 
-  const { mutate: createOrder, isPending: isCreatingOrder } = useOrders.useCreateOrder({
+  const { mutate: createOrder, isPending: isCreatingOrder } = useOrders.useCreate({
     onSuccess(data) {
       clearCart()
       setVoucher(data.payload)
