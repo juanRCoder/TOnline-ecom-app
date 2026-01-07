@@ -6,7 +6,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
   const hideFooter = pathname === "/voucher";
 
   return (
-    <section className="relative max-w-7xl mx-auto min-h-screen flex flex-col outline-1">
+    <section className="relative min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col bg-sidebar text-primary">{children}</div>
       {!hideFooter && (
         <footer className="w-full sticky bottom-0 py-5 flex justify-evenly border-t bg-background text-primary">

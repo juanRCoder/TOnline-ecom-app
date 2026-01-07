@@ -96,7 +96,7 @@ const Checkout = () => {
   return (
     <ShopLayout>
       {/* HEADER */}
-      <div className='flex items-center justify-between p-4 shadow-sm'>
+      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
         <ArrowLeft onClick={() => navigate('/cart')} strokeWidth={3} className='cursor-pointer' />
         <h2 className="text-2xl text-center flex-1 font-semibold">Finalizar Compra</h2>
       </div>

@@ -16,7 +16,7 @@ const Cart = () => {
 
   return (
     <ShopLayout>
-      <div className='bg-background text-foreground flex items-center p-4 border-b'>
+      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
         <ArrowLeft onClick={() => navigate('/')} strokeWidth={3} className='cursor-pointer' />
         <h2 className="text-2xl text-center flex-1 font-semibold">Carrito</h2>
       </div>

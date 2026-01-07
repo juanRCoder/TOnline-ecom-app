@@ -12,6 +12,7 @@ import type { ProductType } from '@/types/products.type';
 import type { CategoryType } from '@/types/categories.type';
 import { FormInput } from '@/components/FormInput';
 import { capitalize } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 
 const Products = () => {
@@ -28,7 +29,7 @@ const Products = () => {
 
   const categories = useMemo(() => {
     if (!allCategories) return
-    return [{ id: '', name: 'Todos' }, ...allCategories.payload ]
+    return [{ id: '', name: 'Todos' }, ...allCategories.payload]
   }, [allCategories])
 
   const handleProductsByCategory = (ctg: CategoryType) => {
@@ -51,73 +52,76 @@ const Products = () => {
 
   return (
     <ShopLayout>
-      <div className='bg-background text-foreground flex p-4 border-b'>
-        <h2 className="text-2xl text-center flex-1 font-semibold">FutamiShop</h2>
+      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
+        <h2 className="text-2xl text-center font-semibold">FutamiShop</h2>
         <div
           onClick={() => navigate('/cart')}
-          className='flex items-center justift-center relative cursor-pointer'
+          className='flex gap-6 items-center justift-center relative cursor-pointer pr-4'
         >
+          <p>Administracion</p>
           {items.length > 0 && (
-            <span className='outline-1 bg-accent flex items-center justify-center absolute right-7 bottom-2 z-50 rounded-full size-7 text-sm'>
+            <Badge className='absolute right-0.5 bottom-4 text-xs'>
               {items.length}
-            </span>
+            </Badge>
           )}
-          <ShoppingCart className='absolute right-4' />
+          <ShoppingCart className='h-8 w-8' />
         </div>
       </div>
-      <div className='pt-4 px-4 flex flex-col gap-4'>
-        <div className='flex gap-2 bg-input rounded-xl p-3'>
-          <Search />
-          <FormInput
-            id='search'
-            placeholder='Buscar productos'
-            onChange={(e) => handleSearchProducts(e)}
-            className="border-0 ring-0 focus:ring-0 focus-visible:ring-0"
-          />
+      <section className='container mx-auto py-4'>
+        <div className='flex flex-col gap-4 pb-4'>
+          <div className='flex gap-2 bg-input rounded-xl p-3'>
+            <Search />
+            <FormInput
+              id='search'
+              placeholder='Buscar productos'
+              onChange={(e) => handleSearchProducts(e)}
+              className="border-0 ring-0 focus:ring-0 focus-visible:ring-0"
+            />
+          </div>
+          <div className="scrollbar-custom flex gap-2 overflow-x-auto">
+            {loadingCategories && (
+              <span className='text-sm'>Cargando categorias...</span>
+            )}
+            {errorCategories && (
+              <span className="text-destructive">{errorCategories.message}</span>
+            )}
+            {categories?.map((ctg: CategoryType) => (
+              <Button
+                key={ctg.id}
+                variant='outline'
+                className='cursor-pointer rounded-md select-none'
+                onClick={() => handleProductsByCategory(ctg)}
+              >
+                {capitalize(ctg.name)}
+              </Button>
+            ))}
+          </div>
         </div>
-        <div className="scrollbar-custom flex gap-2 overflow-x-auto">
-          {loadingCategories && (
-            <span className='text-sm'>Cargando categorias...</span>
-          )}
-          {errorCategories && (
-            <span className="text-destructive">{errorCategories.message}</span>
-          )}
-          {categories?.map((ctg: CategoryType) => (
-            <Button
-              key={ctg.id}
-              variant='outline'
-              className='cursor-pointer rounded-md select-none'
-              onClick={() => handleProductsByCategory(ctg)}
-            >
-              {capitalize(ctg.name)}
-            </Button>
-          ))}
-        </div>
-      </div>
-      {loading && (
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
-          <span className="block border-5 border-l-transparent w-12 h-12 rounded-full animate-spin" />
-          <span>Cargando productos...</span>
-        </div>
-      )}
-      {error && (
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
-          <span className="text-destructive">{error.message}</span>
-        </div>
-      )}
-      {!loading && !error && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {filteredProducts && filteredProducts.length > 0 ? (
-            filteredProducts.map((prd: ProductType) => (
-              <ProductCard key={prd.id} product={prd} />
-            ))
-          ) : (
-            <div className="text-foreground col-span-full text-center py-10 select-none">
-              No se encontraron productos con "{searchTerm}"
-            </div>
-          )}
-        </div>
-      )}
+        {loading && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-4">
+            <span className="block border-5 border-l-transparent w-12 h-12 rounded-full animate-spin" />
+            <span>Cargando productos...</span>
+          </div>
+        )}
+        {error && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-4">
+            <span className="text-destructive">{error.message}</span>
+          </div>
+        )}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filteredProducts && filteredProducts.length > 0 ? (
+              filteredProducts.map((prd: ProductType) => (
+                <ProductCard key={prd.id} product={prd} />
+              ))
+            ) : (
+              <div className="text-foreground col-span-full text-center py-10 select-none">
+                No se encontraron productos con "{searchTerm}"
+              </div>
+            )}
+          </div>
+        )}
+      </section>
     </ShopLayout>
   )
 }

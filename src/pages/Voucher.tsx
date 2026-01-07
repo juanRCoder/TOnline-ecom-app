@@ -14,7 +14,7 @@ const Voucher = () => {
 
   return (
     <ShopLayout>
-      <section className="bg-sidebar text-foreground flex-1 flex flex-col">
+      <div className="bg-sidebar text-foreground flex-1 flex flex-col">
         <div className='bg-background flex items-center justify-between p-4 shadow-sm'>
           <h2 className="text-2xl text-center flex-1 font-semibold">Voucher</h2>
           <Download className='absolute right-4 cursor-pointer' />
@@ -87,7 +87,7 @@ const Voucher = () => {
             <Store /> Volver a la tienda
           </Button>
         </div>
-      </section>
+      </div>
     </ShopLayout>
   )
 }
