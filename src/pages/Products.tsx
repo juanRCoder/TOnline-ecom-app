@@ -55,16 +55,23 @@ const Products = () => {
       <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
         <h2 className="text-2xl text-center font-semibold">FutamiShop</h2>
         <div
-          onClick={() => navigate('/cart')}
           className='flex gap-6 items-center justift-center relative cursor-pointer pr-4'
         >
-          <p>Administracion</p>
-          {items.length > 0 && (
-            <Badge className='absolute right-0.5 bottom-4 text-xs'>
-              {items.length}
-            </Badge>
-          )}
-          <ShoppingCart className='h-8 w-8' />
+          <Button
+            onClick={() => navigate('/admin')}
+            variant='ghost'
+            className='cursor-pointer'
+          >
+            Administracion
+          </Button>
+          <div onClick={() => navigate('/cart')}>
+            {items.length > 0 && (
+              <Badge className='absolute right-0.5 bottom-4 text-xs'>
+                {items.length}
+              </Badge>
+            )}
+            <ShoppingCart className='h-8 w-8' />
+          </div>
         </div>
       </div>
       <section className='container mx-auto py-4'>

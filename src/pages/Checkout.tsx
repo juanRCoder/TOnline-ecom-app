@@ -90,7 +90,7 @@ const Checkout = () => {
     createOrder(formData)
   }
 
-  const totalProductInCart = items.reduce((acc, p) => (acc + p.price) * p.quantity, 0);
+  const totalProductInCart = items.reduce((acc, p) => acc + p.price * p.quantity, 0);
   const addAmountForDelivery = typeOfDeliveryValue === 'delivery' ? 3 : 0;
 
   return (

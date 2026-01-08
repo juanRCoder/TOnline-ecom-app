@@ -10,9 +10,7 @@ const Cart = () => {
   const navigate = useNavigate()
   const { items } = useCartStore()
 
-  const totalProducts = (items ?? []).reduce((acc, item) => {
-    return acc + item.price * item.quantity
-  }, 0)
+  const totalProducts = items.reduce((acc, p) => acc + p.price * p.quantity, 0);
 
   return (
     <ShopLayout>
