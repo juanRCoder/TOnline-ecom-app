@@ -41,7 +41,7 @@ export const AdminOrderCard = ({ order }: props) => {
           </Badge>
         </div>
       </CardContent>
-      <CardFooter className="gap-5">
+      <CardFooter className="gap-5 flex flex-wrap">
         <Button onClick={() => setModalDetails(true)} variant='outline' className="flex-1 py-4 cursor-pointer">
           Ver Resumen
         </Button>

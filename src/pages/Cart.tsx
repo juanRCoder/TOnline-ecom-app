@@ -14,24 +14,26 @@ const Cart = () => {
 
   return (
     <ShopLayout>
-      <Header title="Carrito" path="/"/>
-      <div className='py-4 px-3 flex flex-col gap-6 flex-1'>
-        {items && items.length > 0 ? (
-          items.map((item, i) => (
-            <CartItem key={i} item={item} />
-          ))
-        ) : (
-          <div className="flex flex-1 items-center justify-center text-center select-none">
-            No hay productos en el carrito
-          </div>
-        )}
-      </div>
-      <div>
-        <div className="flex justify-between pb-6 px-3 border-t-2 pt-2 font-semibold">
+      <Header title="Carrito" path="/" />
+      <section className="flex-1 container mx-auto p-4">
+        <div className='flex flex-col gap-6 flex-1'>
+          {items && items.length > 0 ? (
+            items.map((item, i) => (
+              <CartItem key={i} item={item} />
+            ))
+          ) : (
+            <div className="flex flex-1 items-center justify-center text-center select-none">
+              No hay productos en el carrito
+            </div>
+          )}
+        </div>
+      </section>
+      <div className="sticky bottom-25 left-0 right-0 z-50 bg-sidebar border-t-2">
+        <div className="container mx-auto flex justify-between p-4 font-semibold">
           <p>Total:</p>
           <p>S/ {totalProducts.toFixed(2)}</p>
         </div>
-        <div className="px-3 my-4">
+        <div className="container mx-auto p-4">
           <Button
             onClick={() => navigate('/checkout')}
             disabled={items.length === 0}

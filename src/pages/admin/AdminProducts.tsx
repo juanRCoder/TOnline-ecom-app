@@ -18,27 +18,27 @@ const ProductsAdmin = () => {
 
   return (
     <AdminLayout title="Productos" path="/admin/dashboard">
-      <section className='container mx-auto py-4'>
+      <section className='container mx-auto p-4 py-10'>
         {/* CONTENT */}
         {loadingAll && (
-          <div className="flex-1 flex flex-col px-3 gap-5 py-10">
+          <div className="flex-1 flex flex-col gap-4">
             <span className="block border-5 border-l-transparent w-12 h-12 rounded-full animate-spin" />
             <span>Cargando productos...</span>
           </div>
         )}
         {errorAll && (
-          <div className="flex-1 flex flex-col px-3 gap-5 py-10">
+          <div className="flex-1 flex flex-col gap-4">
             <span className="text-destructive">{errorAll.message}</span>
           </div>
         )}
         {!loadingAll && !errorAll && (
-          <div className="flex-1 flex flex-col px-3 gap-5 py-10">
+          <div className="flex-1 flex flex-col gap-4">
             {allProducts?.payload.map((product: ProductType) => (
               <AdminProductCard key={product.id} product={product} />
             ))}
           </div>
         )}
-        <div className="sticky bottom-6 px-6 flex justify-end">
+        <div className="sticky bottom-6 py-4 pl-4 flex justify-end">
           <Button onClick={() => setModalForm(true)} className="rounded-full h-16 w-16 cursor-pointer bg-primary">
             <Plus className="size-8" />
           </Button>

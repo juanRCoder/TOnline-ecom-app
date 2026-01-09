@@ -21,9 +21,9 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <section className="relative min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-col bg-sidebar text-primary">{children}</div>
+      <div className="relative flex-1 flex flex-col bg-sidebar text-primary">{children}</div>
       {!hideFooter && (
-        <footer className="w-full sticky bottom-0 py-5 flex justify-evenly border-t bg-background text-primary">
+        <footer className="sticky bottom-0 py-6 flex justify-evenly border-t bg-background text-primary">
           {footerItems.map(({ to, label, Icon }) => (
             <Link key={to} to={to} className="flex flex-col items-center gap-1 cursor-pointer group">
               <Icon className="group-hover:text-muted-foreground" />

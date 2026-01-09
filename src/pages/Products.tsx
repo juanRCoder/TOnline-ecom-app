@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Search, ShoppingCart } from 'lucide-react';
+import { Search, ShoppingCart, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ShopLayout from '@/layouts/ShopLayout';
 import { ProductCard } from '@/components/ProductCard';
@@ -13,6 +13,8 @@ import type { CategoryType } from '@/types/categories.type';
 import { FormInput } from '@/components/FormInput';
 import { capitalize } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 
 
 const Products = () => {
@@ -52,10 +54,11 @@ const Products = () => {
 
   return (
     <ShopLayout>
-      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
+      <div className='sticky z-50 top-0 bg-background text-foreground flex flex-wrap gap-4 justify-between p-4 border-b'>
         <h2 className="text-2xl text-center font-semibold">FutamiShop</h2>
+        {/* ACTIONS MENU DESKTOP MODE */}
         <div
-          className='flex gap-6 items-center justift-center relative cursor-pointer pr-4'
+          className='hidden sm:flex gap-6 items-center justift-center relative cursor-pointer pr-4'
         >
           <Button
             onClick={() => navigate('/admin')}
@@ -73,8 +76,29 @@ const Products = () => {
             <ShoppingCart className='h-8 w-8' />
           </div>
         </div>
+        {/* ACTIONS MENU MOBILE MODE */}
+        <div className='sm:hidden flex justify-center items-center'>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Menu className='cursor-pointer' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-4 mt-2 outline rounded-lg bg-card" align="start">
+              <DropdownMenuItem onClick={() => navigate('/admin')} className='p-4 cursor-pointer'>
+                Administrador
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/cart')} className='p-4 border-t cursor-pointer flex justify-between'>
+                Carrito
+                {items.length > 0 && (
+                  <Badge className='text-xs'>
+                    {items.length}
+                  </Badge>
+                )}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-      <section className='container mx-auto py-4'>
+      <section className='container mx-auto p-4'>
         <div className='flex flex-col gap-4 pb-4'>
           <div className='flex gap-2 bg-input rounded-xl p-3'>
             <Search />

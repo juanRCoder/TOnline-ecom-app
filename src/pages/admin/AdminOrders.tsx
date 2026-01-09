@@ -9,19 +9,21 @@ const AdminOrders = () => {
 
   return (
     <AdminLayout title="Ordenes" path="/admin/dashboard">
-      <div className="scrollbar-custom text-primary flex justify-evenly overflow-x-auto px-3 py-5">
-        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
-          Todos
-        </Button>
-        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
-          Pendientes
-        </Button>
-        <Button variant='ghost' className="flex-1 cursor-pointer py-2">
-          Entregadas
-        </Button>
+      <div className="sticky z-50 top-16 bg-sidebar text-primary">
+        <div className="container mx-auto flex justify-evenly overflow-x-auto scrollbar-custom p-4">
+          <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+            Todos
+          </Button>
+          <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+            Pendientes
+          </Button>
+          <Button variant='ghost' className="flex-1 cursor-pointer py-2">
+            Entregadas
+          </Button>
+        </div>
       </div>
       {/* CONTENT */}
-      <div className="flex flex-col px-3 gap-5 py-10">
+      <div className="container mx-auto flex flex-col px-4 gap-5 py-10">
         {allOrders?.payload.map((ord: OrderType) => (
           <AdminOrderCard key={ord.id} order={ord} />
         ))}

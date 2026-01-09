@@ -29,7 +29,7 @@ const Dashboard = () => {
   return (
     <AdminLayout title="Panel de administración" path="/">
       {/* CONTENT */}
-      <div className="bg-sidebar text-foreground flex-1 flex flex-col px-4 gap-5">
+      <div className="container mx-auto bg-sidebar text-foreground flex-1 flex flex-col px-4 gap-5">
         <div className="bg-card flex flex-col justify-center items-center mt-10 py-5 rounded-md outline-1 outline-border">
           {imgUser ? (
             <img

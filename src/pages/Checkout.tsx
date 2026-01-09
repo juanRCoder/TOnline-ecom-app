@@ -96,8 +96,8 @@ const Checkout = () => {
   return (
     <ShopLayout>
       <Header title="Finalizar Compra" path="/cart"/>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="flex flex-col gap-3 px-3 pt-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="container mx-auto px-4">
+        <section className="flex flex-col gap-3 pt-3">
           <FormInput
             id="guestUserName"
             label="Nombre de cliente"
@@ -113,7 +113,7 @@ const Checkout = () => {
             error={errors.guestUserPhone?.message}
           />
         </section>
-        <section className="px-3">
+        <section>
           <h3 className="font-semibold my-4">Tipo de Entrega</h3>
           <div className="flex flex-col gap-4">
             <FormInputRadio
@@ -141,7 +141,7 @@ const Checkout = () => {
           </div>
         </section>
         {typeOfDeliveryValue === "delivery" && (
-          <section className="flex flex-col gap-3 px-3 pt-3">
+          <section className="flex flex-col gap-4 pt-4">
             <FormInput
               id="guestUserAddress"
               label="Direccion domiciliaria del cliente"
@@ -151,7 +151,7 @@ const Checkout = () => {
             />
           </section>
         )}
-        <section className="px-3">
+        <section>
           <h3 className="font-semibold my-4">Método de Pago</h3>
           <div className="flex flex-col gap-4">
             <FormInputRadio
@@ -178,7 +178,7 @@ const Checkout = () => {
           </div>
         </section>
         {typeOfPaymentValue === "bank" && (
-          <section className="p-3">
+          <section>
             <div className="my-4 outline-1 outline-secondary rounded-md p-3">
               {/* METODOS DE PAGO */}
               <div className="flex flex-wrap-reverse justify-between items-center gap-2">
@@ -227,7 +227,7 @@ const Checkout = () => {
             )}
           </section>
         )}
-        <section className="flex flex-col gap-3 px-3 pt-3">
+        <section className="flex flex-col gap-4 pt-4">
           <Label htmlFor="notes">Notas para la tienda</Label>
           <textarea
             className="scrollbar-custom outline-none rounded-md p-2 min-h-20 resize-none bg-input"
@@ -238,7 +238,7 @@ const Checkout = () => {
           {errors.notes && <p className="text-sm text-destructive">{errors.notes.message}</p>}
         </section>
         {/* RESUMEN */}
-        <div className="outline-1 outline-secondary mx-3 mt-10 rounded-md">
+        <div className="outline-1 outline-secondary mt-10 rounded-md">
           <h3 className="font-semibold p-3">Resumen</h3>
           <div className="flex justify-between border-t-2 border-t-secondary py-2 mx-3 text-sm">
             <p>Total productos</p>
@@ -260,7 +260,7 @@ const Checkout = () => {
         {hasItems && (
           <p className="text-destructive mx-3 mt-4">No hay productos en el carrito</p>
         )}
-        <div className="px-3 my-4">
+        <div className="my-4">
           <Button
             type="submit"
             disabled={items.length === 0}

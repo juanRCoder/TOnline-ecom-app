@@ -14,17 +14,18 @@ const AdminCategories = () => {
 
   return (
     <AdminLayout title="Categorias" path="/admin/dashboard">
-      {/* CONTENT */}
-      <div className="flex flex-1 flex-col px-3 gap-5 py-10">
-        {allCategories?.payload?.map((ct: CategoryType) => (
-          <AdminCategoryCard key={ct.id} category={ct} />
-        ))}
-      </div>
-      <div className="sticky bottom-6 px-6 flex justify-end">
-        <Button onClick={() => setModalForm(true)} className="rounded-full h-16 w-16 cursor-pointer bg-primary">
-          <Plus className="size-8" />
-        </Button>
-      </div>
+      <section className="container mx-auto py-10 px-4">
+        <div className="flex flex-1 flex-col gap-4">
+          {allCategories?.payload?.map((ct: CategoryType) => (
+            <AdminCategoryCard key={ct.id} category={ct} />
+          ))}
+        </div>
+        <div className="sticky bottom-6 py-4 pl-4 flex justify-end">
+          <Button onClick={() => setModalForm(true)} className="rounded-full h-16 w-16 cursor-pointer bg-primary">
+            <Plus className="size-8" />
+          </Button>
+        </div>
+      </section>
       <AdminCategoryForm open={modalForm} onOpenChange={setModalForm} />
     </AdminLayout>
   )
