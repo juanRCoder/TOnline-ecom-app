@@ -1,9 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, BoxIcon, ChevronRight, LayoutGrid, NotepadText, UserRound } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BoxIcon, ChevronRight, LayoutGrid, NotepadText, UserRound } from "lucide-react";
 import { AdminLayout } from "@/layouts/AdminLayout";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
 
   const adminActions = [
     {
@@ -28,12 +27,7 @@ const Dashboard = () => {
   const imgUser = ''
 
   return (
-    <AdminLayout>
-      {/* HEADER */}
-      <div className='bg-background text-foreground flex p-4 border-b'>
-        <ArrowLeft onClick={() => navigate('/')} strokeWidth={3} className='cursor-pointer' />
-        <h2 className="text-2xl text-center flex-1 font-semibold">Panel de administración </h2>
-      </div>
+    <AdminLayout title="Panel de administración" path="/">
       {/* CONTENT */}
       <div className="bg-sidebar text-foreground flex-1 flex flex-col px-4 gap-5">
         <div className="bg-card flex flex-col justify-center items-center mt-10 py-5 rounded-md outline-1 outline-border">

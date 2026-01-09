@@ -1,9 +1,9 @@
-import { ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 import ShopLayout from "@/layouts/ShopLayout";
 import { CartItem } from "@/components/CartItem";
 import { useCartStore } from "@/stores/cart.store";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/layouts/Header";
 
 
 const Cart = () => {
@@ -14,10 +14,7 @@ const Cart = () => {
 
   return (
     <ShopLayout>
-      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
-        <ArrowLeft onClick={() => navigate('/')} strokeWidth={3} className='cursor-pointer' />
-        <h2 className="text-2xl text-center flex-1 font-semibold">Carrito</h2>
-      </div>
+      <Header title="Carrito" path="/"/>
       <div className='py-4 px-3 flex flex-col gap-6 flex-1'>
         {items && items.length > 0 ? (
           items.map((item, i) => (

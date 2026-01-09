@@ -1,7 +1,15 @@
+import { Header } from "./Header"
 
-export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+type props = {
+  title: string
+  path: string
+  children: React.ReactNode
+}
+
+export const AdminLayout = ({ title, path, children }: props) => {
   return (
-    <section className="relative max-w-7xl mx-auto outline-1 bg-white text-gray-800 min-h-screen flex flex-col">
+     <section className="relative min-h-screen flex flex-col">
+      <Header title={title} path={path} />
       <div className="flex-1 flex flex-col bg-sidebar">{children}</div>
     </section>
   )

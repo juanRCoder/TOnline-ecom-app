@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ShopLayout from "@/layouts/ShopLayout";
@@ -14,6 +13,7 @@ import { defaultCheckoutForm } from "@/lib/default";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Header } from "@/layouts/Header";
 
 const Checkout = () => {
   const [hasItems, setHasItem] = useState<boolean>(false)
@@ -95,11 +95,7 @@ const Checkout = () => {
 
   return (
     <ShopLayout>
-      {/* HEADER */}
-      <div className='w-full sticky z-50 top-0 bg-background text-foreground flex justify-between p-4 border-b'>
-        <ArrowLeft onClick={() => navigate('/cart')} strokeWidth={3} className='cursor-pointer' />
-        <h2 className="text-2xl text-center flex-1 font-semibold">Finalizar Compra</h2>
-      </div>
+      <Header title="Finalizar Compra" path="/cart"/>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-col gap-3 px-3 pt-3">
           <FormInput
